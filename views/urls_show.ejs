@@ -11,10 +11,14 @@
     <title>URL - TinyApp Example</title>
   </head>
 
-  <body>
-    <div class="card text-center">
+  <body style="background-color:black; color: whitesmoke">
+    <header>
+      <%- include('partials/_header') %>
+    </header>
+
+    <div class="card text-center" style="background-color:rgb(80, 78, 78)">
       <div class="card-header"></div>
-      <div class="card-body">
+      <div class="card-body" style="background-color:black; color: whitesmoke">
         <h5 class="card-title">TinyURL for: <a href="<%= longURL %>"><%= longURL %></a></h5>
         <p class="card-text">
           Short URL ID: <a href="/u/<%= id %>"><%= id %></a>
