@@ -20,6 +20,7 @@ console.log(`${conLine.fullLineDash(conColor.orange)}`);
 const app = express();
 const PORT = 1052; // default port 8080 // Define our base URL as http:\\localhost:1052
 app.set("view engine", "ejs"); // Use EJs as view engine
+app.use(express.urlencoded({ extended: true }));
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -45,6 +46,10 @@ app.get("/urls", (req, res) => {
   res.render("urls_index", templateVars);
 });
 
+app.get("/urls/new", (req, res) => {
+  res.render("urls_new");
+});
+
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
 });
@@ -61,3 +66,30 @@ app.listen(PORT, () => {
   console.log(`${conColor.blue}Example app listening on port ${PORT}!${conColor.reset}`);
 });
 //----------------------------------------------------------
+
+//----------------------------------------------------------
+app.post("/urls", (req, res) => {
+  console.log(req.body); // Log the POST request body to the console
+  res.send("Ok"); // Respond with 'Ok' (we will replace this)
+});
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+// Generate Random 6 Character Alphanumeric String - 0-9 & A-Z & a-z
+function generateRandomString() {
+  let choice = []
+  let random = ""
+  for (let i = 48; i < 58; i ++) {
+    choice.push(i);
+  }
+  for (let j = 65; j < 91; j ++) {
+    choice.push(j);
+  }
+  for (let y = 97; y < 123; y ++) {
+    choice.push(y);
+  }
+  for (let x = 0; x < 6; x++) {
+    random += String.fromCharCode(choice[Math.floor(Math.random() * (choice.length))]);
+  }
+  return random;
+}
