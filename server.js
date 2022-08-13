@@ -19,6 +19,7 @@ console.log(`${conLine.fullLineDash(conColor.orange)}`);
 // Define our app as an instance of express & Define Port
 const app = express();
 const PORT = 1052; // default port 8080 // Define our base URL as http:\\localhost:1052
+app.set("view engine", "ejs"); // Use EJs as view engine
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -39,8 +40,18 @@ app.get("/urls.json", (req, res) => {
   res.json(urlDatabase);
 });
 
+app.get("/urls", (req, res) => {
+  const templateVars = { urls: urlDatabase};
+  res.render("urls_index", templateVars);
+});
+
 app.get("/hello", (req, res) => {
   res.send("<html><body>Hello <b>World</b></body></html>\n");
+});
+
+app.get("/urls/:id", (req, res) => {
+  const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
+  res.render("urls_show", templateVars);
 });
 //----------------------------------------------------------
 
