@@ -13,9 +13,18 @@
       >
         <span class="navbar-toggler-icon"></span>
       </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
+      <form id="myform" action="/register" method="POST"></form>
   <form class="form-inline" action="/login" method="POST">
     <button class="btn form-control my-2 my-sm-0 border-secondary" type="submit" data-toggle="tooltip" data-placement="top" title="Login" style="background-color:#ff8000; color:black">Login  <i class="fa-solid fa-user"></i></button>
+
+    <div class="form-group mx-sm-1 align-middle text-right">
+      <label style="color:black">  </label>
+    </div>
+
+    <button form="myform" class="btn form-control my-2 my-sm-0 border-secondary" type="submit" data-toggle="tooltip" data-placement="top" title="Register" style="background-color:#ff8000; color:black">Register</button>
   </form>
+      </div>
 <% } else{ %> 
   <header>
     <nav class="navbar navbar-expand-md navbar-light" style="background-color:#ff8000">
