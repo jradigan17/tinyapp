@@ -12,11 +12,51 @@
     >
       <span class="navbar-toggler-icon"></span>
     </button>
+
     <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-      <div class="navbar-nav">
-        <a class="nav-item nav-link" href="/urls">My URLs</a>
-        <a class="nav-item nav-link" href="/urls/new">Create New URL</a>
-      </div>
+      <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+        <li class="nav-item active">
+          <a class="nav-link" href="/urls">My URLs <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item active">
+          <a class="nav-link" href="/urls/new">Create New URL</a>
+        </li>
+      </ul>
+
+      <% if(!username){ %>
+        <form class="form-inline my-2 my-lg-0" action="/login" method="POST">
+          <button class="btn btn-outline-success my-2 my-sm-0 btn-outline-dark" type="submit" data-toggle="tooltip" data-placement="top" title="Login" style="background-color:#ff8000; color:black"><i class="fa-solid fa-user"></i></button>
+        </form>
+      <% } else{ %>  
+        <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
+          <div class="form-group mx-sm-3">
+            <label style="color:black"><%= username %></label>
+          </div>
+          <button class="btn btn-outline-success btn-outline-dark" type="submit" data-toggle="tooltip" data-placement="top" title="Logout" style="background-color:#ff8000; color:black"><i class="fa-solid fa-user"></i></button>
+        </form>
+     <% } %>
+
+      
     </div>
   </nav>
 </header>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

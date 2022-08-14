@@ -22,21 +22,19 @@
       <div class="card-header"></div>
       <div class="card-body" style="background-color:black; color: whitesmoke">
         <div style="width: 20%; float:left">
-        <form class="text-left" action="/urls/<%= id %>/view" method="POST">
-          <button type="submit" class="btn" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)">Cancel</button>
-        </form>
+          <form class="text-left" action="/urls/<%= id %>/view" method="POST">
+            <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Cancel Changes" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-regular fa-circle-left"></i> Cancel</button>
+          </form>
         </div>
-
         <div style="width: 80%; float:right">
           <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
           <form class="text-right" action="/urls/<%= id %>/edit" method="POST" >
-            <button form="myform" type="submit"  class="btn" style="background-color:rgb(226, 43, 92); color:black"><i class="fa-solid fa-trash-can"></i></button>
+            <button form="myform" type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Delete" style="background-color:rgb(242, 22, 22); color:black"><i class="fa-solid fa-trash-can"></i></button>
           </form>
-          </div>
-
-        <h5 class="card-title">TinyURL for: <a href="<%= longURL %>" target="_blank"><%= longURL %></a></h5>
+        </div>
+        <h5 class="card-title">Tiny URL for: <a href="<%= longURL %>" data-toggle="tooltip" data-placement="top" title="<%= longURL %>" target="_blank"><%= longURL %></a></h5>
         <p class="card-text">
-          Short URL ID: <a href="/u/<%= id %>" target="_blank"><%= id %></a>
+          Tiny URL ID: <a href="/u/<%= id %>" data-toggle="tooltip" data-placement="top" title="<%= longURL %>" target="_blank"><%= id %></a>
         </p>
         <form class="form-inline blockquote row justify-content-center" action="/urls/<%= id %>/update" method="POST">
           <div class="form-group mb-2">

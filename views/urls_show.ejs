@@ -1,63 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <!-- Bootstrap CSS -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
-      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-      crossorigin="anonymous"
-    />
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
-    <title>URL - TinyApp Example</title>
-  </head>
 
-  <body style="background-color:black; color: whitesmoke">
-    <header>
-      <%- include('partials/_header') %>
-    </header>
+<head>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+  <!-- Font Awesome -->
+  <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
+  <title>URL - TinyApp Example</title>
+</head>
 
-    <div class="card text-center" style="background-color:rgb(80, 78, 78)">
-      <div class="card-header"></div>
-      <div class="card-body" style="background-color:black; color: whitesmoke">
-        <div style="width: 20%; float:left">
+<body style="background-color:black; color: whitesmoke">
+  <header>
+    <%- include('partials/_header') %>
+  </header>
+  <div class="card text-center" style="background-color:rgb(80, 78, 78)">
+    <div class="card-header"></div>
+    <div class="card-body" style="background-color:black; color: whitesmoke">
+      <div style="width: 20%; float:left">
         <form class="text-left" action="/urls" method="POST">
-          <button type="submit" class="btn" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)">Back to My URLs</button>
+          <button type="submit" class="btn text-nowrap" data-toggle="tooltip" data-placement="top" title="Back to My URLs" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-regular fa-circle-left"></i> Back to My URLs</button>
         </form>
-        </div>
-
-        <div style="width: 80%; float:right">
-          <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
-          <form class="text-right" action="/urls/<%= id %>/edit" method="POST" >
-            <button type="submit" class="btn" style="background-color:blueviolet; color:black"><i class="fa-solid fa-pen-to-square"></i></button>
-            <button form="myform" type="submit"  class="btn" style="background-color:rgb(226, 43, 92); color:black"><i class="fa-solid fa-trash-can"></i></button>
-          </form>
-          </div>
-
-
-        <h5 class="card-title">TinyURL for: <a href="<%= longURL %>" target="_blank"><%= longURL %></a></h5>
-        <p class="card-text">
-          Short URL ID: <a href="/u/<%= id %>" target="_blank"><%= id %></a>
-        </p>
       </div>
-      <div class="card-footer text-muted"></div>
+      <div style="width: 80%; float:right">
+        <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
+        <form class="text-right" action="/urls/<%= id %>/edit" method="POST">
+          <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Edit" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-solid fa-pen-to-square"></i></button>
+          <button form="myform" type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Delete"style="background-color:rgb(242, 22, 22); color:black"><i class="fa-solid fa-trash-can"></i></button>
+        </form>
+      </div>
+      <h5 class="card-title">Tiny URL for: <a href="<%= longURL %>" data-toggle="tooltip" data-placement="top" title="<%= longURL %>" target="_blank">
+          <%= longURL %>
+        </a></h5>
+      <p class="card-text">
+        Tiny URL ID: <a href="/u/<%= id %>" data-toggle="tooltip" data-placement="top" title="<%= longURL %>" target="_blank">
+          <%= id %>
+        </a>
+      </p>
     </div>
-    <!-- Bootstrap JS -->
-    <script
-      src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-      integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <div class="card-footer text-muted"></div>
+  </div>
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+</body>
+
 </html>
