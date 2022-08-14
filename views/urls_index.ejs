@@ -4,7 +4,7 @@
     <meta charset="utf-8" />
     <meta
       name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      content="width=device-width, initial-scale=1, shrink-to-fit=yes"
     />
 
     <!-- Bootstrap CSS -->
@@ -14,6 +14,8 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
     <title>TinyApp</title>
   </head>
   <body style="background-color:black; color: whitesmoke">
@@ -21,24 +23,41 @@
       <%- include('partials/_header') %>
     </header>
 
-    <main style="margin: 1em;">
+    <main style="margin: 2em;">
       <h3>My URLs</h3>
-      <table class="table">
+      <div class="row">
+        <div class="column 1"></div>
+      <table class="table table-sm table-striped table-dark table-hover" style="width: 1000px; margin: 2em;">
         <thead>
           <tr>
-            <th scope="col">Short URL ID</th>
-            <th scope="col">Long URL</th>
+            <th class="align-middle blockquote" style="width: 150px;" scope="col">Short URL ID</th>
+            <th class="align-middle blockquote" style="width: 250px;" scope="col">Long URL</th>
+            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Edit</th>
+            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
           <% for (let id in urls) { %>
             <tr>
-              <td><%= id %></td>
-              <td><%= urls[id] %></td>
+              <td class="align-middle"><%= id %></td>
+              <td class="align-middle"><%= urls[id] %></td>
+              <td class="align-middle blockquote text-center">
+                <form action="/urls/:id/delete" method="POST">
+                  <button type="submit" class="btn" style="background-color:blueviolet; color:black"><i class="fa-solid fa-pen-to-square"></i></button>
+                </form>
+              </td>
+              <td class="align-middle blockquote text-center">
+                <form action="/urls/:id/delete" method="POST">
+                  <button type="submit" class="btn" style="background-color:rgb(226, 43, 92); color:black"><i class="fa-solid fa-trash-can"></i></button>
+                </form>
+              </td>
             </tr>
           <% } %>
         </tbody>
       </table>
+    </div>
+      <div class="column 2"></div>
+    </div>
     </main>
     <!-- Bootstrap JS -->
     <script
