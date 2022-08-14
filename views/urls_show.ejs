@@ -8,6 +8,8 @@
       integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
       crossorigin="anonymous"
     />
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
     <title>URL - TinyApp Example</title>
   </head>
 
@@ -19,6 +21,9 @@
     <div class="card text-center" style="background-color:rgb(80, 78, 78)">
       <div class="card-header"></div>
       <div class="card-body" style="background-color:black; color: whitesmoke">
+        <form class="text-right" action="/urls/<%= id %>/delete" method="POST">
+          <button type="submit" class="btn" style="background-color:rgb(226, 43, 92); color:black"><i class="fa-solid fa-trash-can"></i></button>
+        </form>
         <h5 class="card-title">TinyURL for: <a href="<%= longURL %>"><%= longURL %></a></h5>
         <p class="card-text">
           Short URL ID: <a href="/u/<%= id %>"><%= id %></a>
