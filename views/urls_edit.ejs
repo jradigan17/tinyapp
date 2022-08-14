@@ -22,24 +22,35 @@
       <div class="card-header"></div>
       <div class="card-body" style="background-color:black; color: whitesmoke">
         <div style="width: 20%; float:left">
-        <form class="text-left" action="/urls" method="POST">
-          <button type="submit" class="btn" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)">Back to My URLs</button>
+        <form class="text-left" action="/urls/<%= id %>/view" method="POST">
+          <button type="submit" class="btn" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)">Cancel</button>
         </form>
         </div>
 
         <div style="width: 80%; float:right">
           <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
           <form class="text-right" action="/urls/<%= id %>/edit" method="POST" >
-            <button type="submit" class="btn" style="background-color:blueviolet; color:black"><i class="fa-solid fa-pen-to-square"></i></button>
             <button form="myform" type="submit"  class="btn" style="background-color:rgb(226, 43, 92); color:black"><i class="fa-solid fa-trash-can"></i></button>
           </form>
           </div>
-
 
         <h5 class="card-title">TinyURL for: <a href="<%= longURL %>" target="_blank"><%= longURL %></a></h5>
         <p class="card-text">
           Short URL ID: <a href="/u/<%= id %>" target="_blank"><%= id %></a>
         </p>
+        <form class="form-inline blockquote row justify-content-center" action="/urls/<%= id %>/update" method="POST">
+          <div class="form-group mb-2">
+            <label for="longURL">Enter New URL:</label>
+            <input
+              class="form-control mx-sm-3"
+              type="text"
+              name="longURL"
+              placeholder="http://"
+              style="width: 300px; margin: 1em"
+            />
+            <button type="submit" class="btn" style="background-color:blueviolet; color:black">Submit</button>
+          </div>
+        </form>
       </div>
       <div class="card-footer text-muted"></div>
     </div>

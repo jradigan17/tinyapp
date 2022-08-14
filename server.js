@@ -61,6 +61,12 @@ app.get("/urls/:id", (req, res) => {
   res.render("urls_show", templateVars);
 });
 
+app.get("/urls/:id/edit", (req, res) => {
+  const templateVars = { id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
+  // console.log(templateVars)
+  res.render("urls_edit", templateVars);
+});
+
 app.get("/u/:id", (req, res) => {
   const longURL = urlDatabase[req.params.id]
   console.log(longURL)
@@ -76,7 +82,7 @@ app.listen(PORT, () => {
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-app.post("/urls", (req, res) => {
+app.post("/urls/new", (req, res) => {
   let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
   let id = generateRandomString()
   urlDatabase[id] = longURL;
@@ -84,11 +90,33 @@ app.post("/urls", (req, res) => {
   res.redirect(`/urls/${id}`)
 });
 
+app.post("/urls", (req, res) => {
+  res.redirect(`/urls`)
+});
+
 app.post("/urls/:id/delete", (req, res) => {
   console.log(req.params.id)
   delete urlDatabase[req.params.id];
   console.log(urlDatabase);
   res.redirect(`/urls`)
+});
+
+app.post("/urls/:id/view", (req, res) => {
+  console.log(req.params.id)
+  console.log(urlDatabase);
+  res.redirect(`/urls/${req.params.id}`)
+});
+
+app.post("/urls/:id/edit", (req, res) => {
+  res.redirect(`/urls/${req.params.id}/edit`)
+});
+
+app.post("/urls/:id/update", (req, res) => {
+  let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
+  console.log(req.params.id)
+  urlDatabase[req.params.id] = longURL;
+  console.log(urlDatabase);
+  res.redirect(`/urls/${req.params.id}`)
 });
 //----------------------------------------------------------
 

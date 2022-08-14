@@ -32,7 +32,7 @@
           <tr>
             <th class="align-middle blockquote" style="width: 150px;" scope="col">Short URL ID</th>
             <th class="align-middle blockquote" style="width: 250px;" scope="col">Long URL</th>
-            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Edit</th>
+            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Details</th>
             <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Delete</th>
           </tr>
         </thead>
@@ -42,8 +42,8 @@
               <td class="align-middle"><%= id %></td>
               <td class="align-middle"><%= urls[id] %></td>
               <td class="align-middle blockquote text-center">
-                <form action="/urls/:id/delete" method="POST">
-                  <button type="submit" class="btn" style="background-color:blueviolet; color:black"><i class="fa-solid fa-pen-to-square"></i></button>
+                <form action="/urls/<%= id %>/view" method="POST">
+                  <button type="submit" class="btn" style="background-color:blueviolet; color:black"><i class="fa-solid fa-magnifying-glass"></i></button>
                 </form>
               </td>
               <td class="align-middle blockquote text-center">
