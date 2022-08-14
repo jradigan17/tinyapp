@@ -90,6 +90,12 @@ app.get("/login", (req, res) => {
   const templateVars = { username: req.cookies["username"]}
   res.render("urls_login", templateVars);
 });
+
+app.get("/logout", (req, res) => {
+  res.clearCookie('username')
+  console.log(req.cookies)
+  res.redirect(`/urls`);
+});
 //----------------------------------------------------------
 
 //----------------------------------------------------------
