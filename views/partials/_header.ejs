@@ -1,4 +1,4 @@
-<% if(!username){ %>
+<% if(!user){ %>
   <header>
     <nav class="navbar navbar-expand-md navbar-light justify-content-between" style="background-color:#ff8000">
       <a class="navbar-brand" href="/urls">TinyApp</a>
@@ -51,7 +51,7 @@
     </ul> 
   <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
     <div class="form-group mx-sm-1 align-middle text-right">
-      <label style="color:black"><%= username %></label>
+      <label style="color:black"><%= user.username %></label>
     </div>
     <div class="nav-item dropdown">
       <a class="nav-link dropdown-toggle align-middle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="User Settings">
