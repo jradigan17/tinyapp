@@ -113,6 +113,11 @@ app.get("/profile", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
   res.render("urls_profile", templateVars);
 });
+
+app.get("/profile/edit", (req, res) => {
+  const templateVars = {user: userDatabase[req.cookies.userID]}
+  res.render("urls_editprofile", templateVars);
+});
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -186,6 +191,7 @@ app.post("/urls/:id/update", (req, res) => {
 });
 
 app.post("/submitregister", (req, res) => {
+  
   let userID = generateRandomString()
   Object.assign(userDatabase, {[userID]: {userID: userID, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password: req.body.password, email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode}})
   res.cookie("userID", userID)
@@ -194,6 +200,13 @@ app.post("/submitregister", (req, res) => {
   res.redirect(`/urls`);
 });
 
+app.post("/editprofile", (req, res) => {
+  res.redirect(`/profile/edit`);
+});
+
+app.post("/userprofile", (req, res) => {
+  res.redirect(`/profile`);
+});
 //----------------------------------------------------------
 
 //----------------------------------------------------------
