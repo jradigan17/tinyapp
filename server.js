@@ -108,6 +108,11 @@ app.get("/register", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
   res.render("urls_register", templateVars);
 });
+
+app.get("/profile", (req, res) => {
+  const templateVars = {user: userDatabase[req.cookies.userID]}
+  res.render("urls_profile", templateVars);
+});
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -189,11 +194,6 @@ app.post("/submitregister", (req, res) => {
   res.redirect(`/urls`);
 });
 
-app.post("/userprofile/:id", (req, res) => {
-  // console.log(req.params.id);
-  // console.log(userDatabase);
-  res.redirect(`/userprofile/${req.params.id}`);
-});
 //----------------------------------------------------------
 
 //----------------------------------------------------------

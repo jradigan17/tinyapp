@@ -18,75 +18,77 @@
   </header>
 
   <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
+    <div style="width: 20%; float:left">
+      <form class="text-left" action="/urls" method="POST">
+        <button type="submit" class="btn text-nowrap" data-toggle="tooltip" data-placement="top" title="Back to My URLs" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-regular fa-circle-left"></i> Back to My URLs</button>
+      </form>
+    </div>
     <div class="card-body">
-      <h5 class="card-title">User Registration Form</h5>
+      <h5 class="card-title">User Profile</h5>
 
-      <form class="row g-3 justify-content-center needs-validation" action="/submitregister" method="POST">
+      <form class="row g-3 justify-content-center" action="/urls" method="POST">
         <div class="col-md-4">
           <label for="firstname" class="form-label">First Name</label>
-          <input type="firstname" class="form-control" name="firstname" name="firstname" placeholder="First Name" required>
+          <label type="firstname" class="form-control" style="background-color:rgb(200, 200, 203)" name="firstname"><%= user.firstname %></label>
         </div>
         <div class="col-md-4">
           <label for="lastname" class="form-label">Last Name</label>
-          <input type="lastname" class="form-control mb-3" name="lastname" placeholder="Last Name"  required>
+          <label type="lastname" class="form-control mb-3" style="background-color:rgb(200, 200, 203)" name="lastname"><%= user.lastname %></label>
         </div>
         <div class="col-md-4">
           <label for="username" class="form-label">Username</label>
-          <input type="username" class="form-control" name="username" placeholder="Username" required>
+          <label type="username" class="form-control" style="background-color:rgb(200, 200, 203)" name="username"><%= user.username %></label>
         </div>
 
         <div class="col-md-6">
           <label for="email" class="form-label">Email</label>
-          <input type="email" class="form-control" name="email" placeholder="example@email.com" required>
+          <label type="email" class="form-control" style="background-color:rgb(200, 200, 203)" name="email"><%= user.email %></label>
         </div>
         <div class="col-md-6">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control" name="password" placeholder="Password" required>
-          <span id="passwordHelpInline" class="form-text font-size: small" style="color: rgb(175, 173, 173)">Must be 8-20 characters long.
+          <label type="password" class="form-control" style="background-color:rgb(200, 200, 203)" name="password">**********</label>
           </span>
         </div>
         <div class="col-12">
           <label for="inputAddress" class="form-label">Address</label>
-          <input type="address" class="mb-3 form-control" name="address1" placeholder="123 Main St">
+          <label type="address" class="mb-3 form-control" style="background-color:rgb(200, 200, 203)" name="address1"><%= user.address1 %></label>
         </div>
         <div class="col-12">
           <label for="inputAddress2" class="form-label">Address 2</label>
-          <input type="address2" class="mb-3 form-control" name="address2" placeholder="Apartment, studio, or floor">
+          <label type="address2" class="mb-3 form-control" style="background-color:rgb(200, 200, 203)" name="address2"><%= user.address2 %></label>
         </div>
         <div class="col-md-6">
           <label for="inputCity" class="form-label">City</label>
-          <input type="city" class="mb-5 form-control" name="city" placeholder="City">
+          <label type="city" class="mb-5 form-control" style="background-color:rgb(200, 200, 203)" name="city"><%= user.city %></label>
         </div>
         <div class="col-md-3">
           <label for="inputProv" class="form-label">Province</label>
-          <select name="province" class="form-select form-control">
-            <option selected>Choose...</option>
-            <option value="1">AB</option>
-            <option value="2">BC</option>
-            <option value="3">MB</option>
-            <option value="4">NB</option>
-            <option value="5">NL</option>
-            <option value="6">NS</option>
-            <option value="7">NT</option>
-            <option value="8">NU</option>
-            <option value="9">ON</option>
-            <option value="10">PE</option>
-            <option value="11">QC</option>
-            <option value="12">SK</option>
-            <option value="13">YT</option>
-          </select>
+          <label name="province" class="form-select form-control" style="background-color:rgb(200, 200, 203)" name="city"><%= user.province %></label>
         </div>
         <div class="col-md-3">
           <label for="inputPostalCode" class="form-label">Postal Code</label>
-          <input type="postal" class="form-control" name="postalcode" placeholder="Postal Code">
+          <label type="postal" class="form-control" style="background-color:rgb(200, 200, 203)" name="postalcode"><%= user.postalcode %></label>
         </div>
-        <div class="col-12 mb-3">
-          <button type="submit" class="btn" style="background-color:#ff8000; color:black">Create An Account</button>
+        <div class="col-md-4">
+          <button type="submit" class="btn" style="background-color:#ff8000; color:black">Edit Profile</button>
+        </div>
+        <div class="col-md-4">
+          <button type="submit" class="btn" style="background-color:#ff8000; color:black">Delete Account</button>
+          </div>
         </div>
       </form>
     </div>
   </div>
-
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
 </body>
 
 </html>
