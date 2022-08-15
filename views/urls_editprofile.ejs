@@ -24,28 +24,28 @@
       </form>
     </div>
     <div class="card-body">
-      <h5 class="card-title">Edit User Information</h5>
+      <h4 class="card-title">Edit User Information</h4>
 
-      <form class="row g-3 justify-content-center needs-validation" action="/submitregister" method="POST">
+      <form class="row g-3 justify-content-center needs-validation" action="/profileupdate" method="POST">
         <div class="col-md-4">
-          <label for="firstname" class="form-label">First Name</label>
-          <input type="firstname" class="form-control" name="firstname" value="<%= user.firstname %>" required>
+          <label for="firstname" class="form-label">First Name<span aria-label="required" style="color:red">*</span></label>
+          <input type="firstname" class="form-control" name="firstname" value="<%= user.firstname %>" required minlength="2">
         </div>
         <div class="col-md-4">
-          <label for="lastname" class="form-label">Last Name</label>
-          <input type="lastname" class="form-control mb-3" name="lastname" value="<%= user.lastname %>"   required>
+          <label for="lastname" class="form-label">Last Name<span aria-label="required" style="color:red">*</span></label>
+          <input type="lastname" class="form-control mb-3" name="lastname" value="<%= user.lastname %>"   required minlength="2">
         </div>
         <div class="col-md-4">
-          <label for="username" class="form-label">Username</label>
-          <input type="username" class="form-control" name="username" value="<%= user.username %>" required>
+          <label for="username" class="form-label">Username<span aria-label="required" style="color:red">*</span></label>
+          <input type="username" class="form-control" name="username" value="<%= user.username %>"  required minlength="3">
         </div>
 
         <div class="col-md-6">
-          <label for="email" class="form-label">Email</label>
+          <label for="email" class="form-label">Email<span aria-label="required" style="color:red">*</span></label>
           <input type="email" class="form-control" name="email" value="<%= user.email %>" required>
         </div>
         <div class="col-md-6">
-          <label for="password" class="form-label">Password</label>
+          <label for="password" class="form-label">Password<span aria-label="required" style="color:red">*</span></label>
           <label type="password" class="form-control" style="background-color:rgb(200, 200, 203)" name="password">**********</label>
           </span>
         </div>

@@ -9,6 +9,7 @@
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
+
   <title>New URL - TinyApp Example</title>
 </head>
 
@@ -16,24 +17,53 @@
   <header>
     <%- include('partials/_header') %>
   </header>
-  <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
+
+
+  <% if(!username) { %>
+    <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
     <main style="margin: 1em;">
       <h3> TinyApp Login</h3>
       <form name="login" class="row g-3 needs-validation" action="/submitlogin" method="POST" style="margin: 1em;">
         <div class="col-md-4">
           <label for="username" class="form-label">Username</label>
-          <input type="username" class="form-control" name="username" placeholder="Username" required>
+          <input type="username" class="form-control border-danger" name="username" placeholder="Username" style="background-color:rgb(249, 185, 185)" required>
+          <span id="passwordHelpInline" class="form-text font-size: small mb-3" style="color: rgb(243, 18, 18)">Invalid Username.
+            </span>
         </div>
         <div class="col-md-4">
           <label for="password" class="form-label">Password</label>
-          <input type="password" class="form-control mb-3" name="password" placeholder="Password"  required>
+          <input type="password" class="form-control mb-3 border-danger" style="background-color:rgb(249, 185, 185)" name="password" placeholder="Password"  required>
         </div>
         <div class="col-12 mb-4">
           <button type="submit" class="btn" style="background-color:#ff8000; color:black">Login</button>
         </div>
       </form>
     </main>
-    </main>
+
+    <% } else{ %> 
+      <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
+        <main style="margin: 1em;">
+          <h3> TinyApp Login</h3>
+          <form name="login" class="row g-3 needs-validation" action="/submitlogin" method="POST" style="margin: 1em;">
+            <div class="col-md-4">
+              <label for="username" class="form-label">Username</label>
+              <input type="username" class="form-control" name="username" value="<%= username.username %>" style="background-color:rgb(255, 255, 255)" required>
+            </div>
+            <div class="col-md-4">
+              <label for="password" class="form-label">Password</label>
+              <input type="password" class="form-control border-danger" style="background-color:rgb(249, 185, 185)" name="password" placeholder="Password"  required>
+              <span id="passwordHelpInline" class="form-text font-size: small mb-3" style="color: rgb(243, 18, 18)">Invalid Password.
+              </span>
+            </div>
+            <div class="col-12 mb-4">
+              <button type="submit" class="btn" style="background-color:#ff8000; color:black">Login</button>
+            </div>
+          </form>
+        </main>
+
+
+    <% } %>
+
     <!-- Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
       integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
