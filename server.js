@@ -22,12 +22,12 @@
 const {conColor, conLine} = require('../../formatting/globalvar');
 const express = require("express");
 const cookieParser = require('cookie-parser');
+const bcrypt = require("bcryptjs");
 //----------------------------------------------------------
 
 //----------------------------------------------------------
 // console.clear();
 console.log(`${conLine.fullLineDash(conColor.orange)}`);
-
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -253,10 +253,11 @@ app.post("/login", (req, res) => {
 });
 
 app.post("/submitlogin", (req, res) => {
-  const user = findKeyByValue(userDatabase, req.body.username);
+    console.log(userDatabase)
+    const user = findKeyByValue(userDatabase, req.body.username);
   if (!user) {
     return res.redirect(`/failedlogin`);
-  } else if (req.body.password !== userDatabase[user].password) {
+  } else if (!bcrypt.compareSync(req.body.password, userDatabase[user].password)) {
     res.cookie("username", userDatabase[user].username);
     return res.redirect(`/failedlogin`);
   } else {
@@ -333,7 +334,7 @@ app.post("/submitregister", (req, res) => {
 
   if (!newusername && !newuseremail) {
     const userID = generateRandomString();
-    Object.assign(userDatabase, {[userID]: {userID: userID, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password: req.body.password, email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode}});
+    Object.assign(userDatabase, {[userID]: {userID: userID, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password: bcrypt.hashSync(req.body.password, 10), email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode}});
     res.cookie("userID", userID);
     res.redirect(`/profile`);
   } else if (newuseremail) {
