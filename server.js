@@ -1,9 +1,8 @@
 //----------------------------------------------------------
 // README -
 // TODO - add light & dark mode
-//      - required fields need to be filled in
+//      - required fields need to be filled in (urls)
 //      - invalid web address
-//      - check if username already exists
 //      - forgot password
 //      - change password
 //      - date created
@@ -14,6 +13,8 @@
 //      - demo page
 //      - add grphic
 //      - add footer
+//      - clean up server side & comments
+//      - delete all cookies on exit
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -56,19 +57,31 @@ app.get("/", (req, res) => {
 });
 
 app.get("/urls.json", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.json(urlDatabase);
+  }
 });
 
 app.get("/urls", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID], urls: urlDatabase};
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.render("urls_index", templateVars);
   // console.log(req.cookies)
   // console.log(templateVars)
+  }
 });
 
 app.get("/urls/new", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]};
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.render("urls_new", templateVars);
+  }
 });
 
 app.get("/hello", (req, res) => {
@@ -76,15 +89,18 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
-  const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
-  // console.log(templateVars)
+  const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id]};
   res.render("urls_show", templateVars);
 });
 
 app.get("/urls/:id/edit", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
+  if (!req.cookies.userID) {
+    res.redirect("/urls/:id");
+  }  else {
   // console.log(templateVars)
   res.render("urls_edit", templateVars);
+  }
 });
 
 app.get("/u/:id", (req, res) => {
@@ -95,7 +111,11 @@ app.get("/u/:id", (req, res) => {
 
 app.get("/login", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
-  res.render("urls_login", templateVars);
+  if (!req.cookies.userID) {
+    res.render("urls_login", templateVars);
+  }  else {
+  res.redirect("/urls");
+  }
 });
 
 app.get("/failedlogin", (req, res) => {
@@ -138,29 +158,45 @@ app.get("/failedregister", (req, res) => {
 app.get("/logout", (req, res) => {
   res.clearCookie('userID')
   // console.log(req.cookies)
-  res.redirect(`/urls`);
+  res.redirect(`/login`);
 });
 
 app.get("/register", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
-  res.render("urls_register", templateVars);
+  if (!req.cookies.userID) {
+    res.render("urls_register", templateVars);
+  }  else {
+    res.redirect("/urls")
+  }
 });
 
 app.get("/profile", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.render("urls_profile", templateVars);
+  }
 });
 
 app.get("/profile/edit", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID]}
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.render("urls_editprofile", templateVars);
+  }
 });
 
 app.get("/profile/err", (req, res) => {
   const templateVars = {user: userDatabase[req.cookies.userID], newuseremail: req.cookies.newuseremail, newusername: req.cookies.newusername}
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.clearCookie('newuseremail')
   res.clearCookie('newusername')
   res.render("urls_editprofileerr", templateVars);
+  }
 });
 //----------------------------------------------------------
 
@@ -174,15 +210,23 @@ app.listen(PORT, () => {
 //----------------------------------------------------------
 // Post Actions
 app.post("/urls/new", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
   const id = generateRandomString();
   urlDatabase[id] = longURL;
   // console.log(urlDatabase);
   res.redirect(`/urls/${id}`);
+  }
 });
 
 app.post("/urls", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.redirect(`/urls`);
+  }
 });
 
 app.post("/login", (req, res) => {
@@ -208,7 +252,7 @@ app.post("/logout", (req, res) => {
   res.clearCookie('username')
   // console.log(req.cookies)
   console.log(userDatabase)
-  res.redirect(`/urls`);
+  res.redirect(`/login`);
 });
 
 app.post("/register", (req, res) => {
@@ -217,10 +261,14 @@ app.post("/register", (req, res) => {
 });
 
 app.post("/urls/:id/delete", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   // console.log(req.params.id);
   delete urlDatabase[req.params.id];
   // console.log(urlDatabase);
   res.redirect(`/urls`);
+  }
 });
 
 app.post("/urls/:id/view", (req, res) => {
@@ -230,15 +278,23 @@ app.post("/urls/:id/view", (req, res) => {
 });
 
 app.post("/urls/:id/edit", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.redirect(`/urls/${req.params.id}/edit`);
+  }
 });
 
 app.post("/urls/:id/update", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
   // console.log(req.params.id);
   urlDatabase[req.params.id] = longURL;
   // console.log(urlDatabase);
   res.redirect(`/urls/${req.params.id}`);
+  }
 });
 
 app.post("/submitregister", (req, res) => {
@@ -250,7 +306,7 @@ app.post("/submitregister", (req, res) => {
     const userID = generateRandomString()
     Object.assign(userDatabase, {[userID]: {userID: userID, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password: req.body.password, email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode}})
     res.cookie("userID", userID)
-    res.redirect(`/urls`);
+    res.redirect(`/profile`);
   } else if (newuseremail) {
     res.cookie("firstname", req.body.firstname)
     res.cookie("lastname", req.body.lastname)
@@ -281,10 +337,17 @@ app.post("/submitregister", (req, res) => {
 });
 
 app.post("/editprofile", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.redirect(`/profile/edit`);
+  }
 });
 
 app.post("/profileupdate", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   const email = findKeyByValueNumE(userDatabase, req.body.email);
   const username = findKeyByValueNumU(userDatabase, req.body.username);
   console.log(email);
@@ -310,19 +373,27 @@ app.post("/profileupdate", (req, res) => {
     res.cookie("newusername", req.body.username)
     res.redirect(`/profile/err`);
   }
+}
 });
 
-
 app.post("/deleteprofile", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   console.log("info", req.body)
   delete userDatabase[req.cookies.userID]
   console.log(userDatabase);
   res.clearCookie("userID")
   res.redirect(`/urls`);
+  }
 });
 
 app.post("/userprofile", (req, res) => {
+  if (!req.cookies.userID) {
+    res.redirect("/login");
+  }  else {
   res.redirect(`/profile`);
+  }
 });
 //----------------------------------------------------------
 
@@ -346,6 +417,21 @@ const generateRandomString = () => {
   return random;
 };
 //----------------------------------------------------------
+
+
+//----------------------------------------------------------
+// Handling non matching request from the client
+app.get("/PageNotFound", (req, res) => {
+  const templateVars = {user: userDatabase[req.cookies.userID], urls: urlDatabase};
+  res.render("pageNotFound", templateVars);
+});
+
+app.use((req, res, next) => {
+  res.status(404).redirect('/PageNotFound')
+});
+//----------------------------------------------------------
+
+
 
 //----------------------------------------------------------
 // Object Key Search
