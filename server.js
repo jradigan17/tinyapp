@@ -29,6 +29,7 @@ const fs = require('fs');
 //----------------------------------------------------------
 // console.clear();
 console.log(`${conLine.fullLineDash(conColor.orange)}`);
+
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -43,8 +44,14 @@ app.use(cookieParser());
 //----------------------------------------------------------
 // Starting URL Database
 const urlDatabase = {
-  "b2xVn2": "http://www.lighthouselabs.ca",
-  "9sm5xK": "http://www.google.com"
+  b6UTxQ: {
+    longURL: "https://www.tsn.ca",
+    userID: "aJ48lW",
+  },
+  i3BoGr: {
+    longURL: "https://www.google.ca",
+    userID: "aJ48lW",
+  },
 };
 
 const userDatabase = {};
@@ -60,18 +67,18 @@ app.get("/urls.json", (req, res) => {
   if (!req.cookies.userID) {
     res.redirect("/login");
   }  else {
-  res.json(urlDatabase);
+    const data = urlsForUserID(req.cookies.userID)
+    res.json(data);
   }
 });
 
 app.get("/urls", (req, res) => {
-  const templateVars = {user: userDatabase[req.cookies.userID], urls: urlDatabase};
+  const data = urlsForUserID(req.cookies.userID)
+  const templateVars = {user: userDatabase[req.cookies.userID], urls: data};
   if (!req.cookies.userID) {
     res.redirect("/login");
   }  else {
   res.render("urls_index", templateVars);
-  // console.log(req.cookies)
-  // console.log(templateVars)
   }
 });
 
@@ -89,24 +96,41 @@ app.get("/hello", (req, res) => {
 });
 
 app.get("/urls/:id", (req, res) => {
-  const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id]};
-  res.render("urls_show", templateVars);
+  if (!urlDatabase[req.params.id]) {
+      res.status(404).redirect('/PageNotFound')
+  } else {
+    const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id].longURL};
+    res.render("urls_show", templateVars);
+  }
 });
 
 app.get("/urls/:id/edit", (req, res) => {
-  const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id]/* What goes here? */ };
-  if (!req.cookies.userID) {
-    res.redirect("/urls/:id");
-  }  else {
-  // console.log(templateVars)
-  res.render("urls_edit", templateVars);
+  if (!urlDatabase[req.params.id]) {
+    res.status(404).redirect('/PageNotFound')
+  } else {
+    const templateVars = {user: userDatabase[req.cookies.userID], id: req.params.id, longURL: urlDatabase[req.params.id].longURL};
+    if (!req.cookies.userID) {
+      res.redirect("/login");
+    }  else if (req.cookies.userID !== urlDatabase[req.params.id].userID) {
+      res.redirect("/restricted");
+    }  else {
+      res.render("urls_edit", templateVars);
+    }
   }
 });
 
 app.get("/u/:id", (req, res) => {
-  const longURL = urlDatabase[req.params.id];
-  // console.log(longURL);
-  res.redirect(`${longURL}`);
+  if (!urlDatabase[req.params.id]) {
+    res.status(404).redirect('/PageNotFound')
+  } else {
+    const longURL = urlDatabase[req.params.id].longURL;
+    res.redirect(`${longURL}`);
+  }
+});
+
+app.get("/restricted", (req, res) => {
+  const templateVars = {user: userDatabase[req.cookies.userID]};
+  res.render(`urls_restricted`, templateVars);
 });
 
 app.get("/login", (req, res) => {
@@ -121,9 +145,9 @@ app.get("/login", (req, res) => {
 app.get("/failedlogin", (req, res) => {
   const user = findKeyByValue(userDatabase, req.cookies.username)
   console.log(user)
-    const templateVars = {user: userDatabase[req.cookies.userID], username: userDatabase[user]}
-    res.clearCookie('username')
-    res.render("urls_loginfail", templateVars);
+  const templateVars = {user: userDatabase[req.cookies.userID], username: userDatabase[user]}
+  res.clearCookie('username')
+  res.render("urls_loginfail", templateVars);
 });
 
 app.get("/failedregister", (req, res) => {
@@ -157,7 +181,6 @@ app.get("/failedregister", (req, res) => {
 
 app.get("/logout", (req, res) => {
   res.clearCookie('userID')
-  // console.log(req.cookies)
   res.redirect(`/login`);
 });
 
@@ -215,8 +238,7 @@ app.post("/urls/new", (req, res) => {
   }  else {
   let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
   const id = generateRandomString();
-  urlDatabase[id] = longURL;
-  // console.log(urlDatabase);
+  urlDatabase[id] = {longURL: longURL, userID: req.cookies.userID};
   res.redirect(`/urls/${id}`);
   }
 });
@@ -243,57 +265,70 @@ app.post("/submitlogin", (req, res) => {
     console.log(userDatabase[user])
     return res.redirect(`/failedlogin`)
   } else {
-  res.cookie("userID", user)
-  res.redirect(`/urls`);
+    res.cookie("userID", user)
+    res.redirect(`/urls`);
   }
 });
 
 app.post("/logout", (req, res) => {
   res.clearCookie('username')
-  // console.log(req.cookies)
-  console.log(userDatabase)
   res.redirect(`/login`);
 });
 
 app.post("/register", (req, res) => {
-  console.log(userDatabase)
   res.redirect(`/register`);
 });
 
 app.post("/urls/:id/delete", (req, res) => {
-  if (!req.cookies.userID) {
-    res.redirect("/login");
-  }  else {
-  // console.log(req.params.id);
-  delete urlDatabase[req.params.id];
-  // console.log(urlDatabase);
-  res.redirect(`/urls`);
+  if (!urlDatabase[req.params.id]) {
+    res.status(404).redirect('/PageNotFound')
+  } else {
+    if (!req.cookies.userID) {
+      res.redirect("/login");
+    } else if (req.cookies.userID !== urlDatabase[req.params.id].userID) {
+      res.redirect("/restricted");
+    } else {
+      delete urlDatabase[req.params.id];
+      res.redirect(`/urls`);
+    }
   }
 });
 
 app.post("/urls/:id/view", (req, res) => {
-  // console.log(req.params.id);
-  // console.log(urlDatabase);
-  res.redirect(`/urls/${req.params.id}`);
+  if (!urlDatabase[req.params.id]) {
+      res.status(404).redirect('/PageNotFound')
+  } else {
+    res.redirect(`/urls/${req.params.id}`);
+  }
 });
 
 app.post("/urls/:id/edit", (req, res) => {
-  if (!req.cookies.userID) {
-    res.redirect("/login");
-  }  else {
-  res.redirect(`/urls/${req.params.id}/edit`);
+  if (!urlDatabase[req.params.id]) {
+    res.status(404).redirect('/PageNotFound')
+  } else {
+    if (!req.cookies.userID) {
+      res.redirect("/login");
+    } else if (req.cookies.userID !== urlDatabase[req.params.id].userID) {
+      res.redirect("/restricted")  
+    } else {
+    res.redirect(`/urls/${req.params.id}/edit`);
+    }
   }
 });
 
 app.post("/urls/:id/update", (req, res) => {
-  if (!req.cookies.userID) {
-    res.redirect("/login");
-  }  else {
-  let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
-  // console.log(req.params.id);
-  urlDatabase[req.params.id] = longURL;
-  // console.log(urlDatabase);
-  res.redirect(`/urls/${req.params.id}`);
+  if (!urlDatabase[req.params.id]) {
+    res.status(404).redirect('/PageNotFound')
+  } else {
+    if (!req.cookies.userID) {
+      res.redirect("/login");
+    } else if (req.cookies.userID !== urlDatabase[req.params.id].userID) {
+      res.redirect("/restricted")  
+    } else {
+      let longURL = req.body.longURL.includes("http:") || req.body.longURL.includes("http:") ? req.body.longURL : 'http://' + req.body.longURL;
+      urlDatabase[req.params.id] = {longURL: longURL, userID: req.cookies.userID};
+      res.redirect(`/urls/${req.params.id}`);
+    }
   }
 });
 
@@ -301,7 +336,6 @@ app.post("/submitregister", (req, res) => {
   const newusername = findKeyByValue(userDatabase, req.body.username)
   const newuseremail =  findKeyByValueEmail(userDatabase, req.body.email)
 
-  console.log(newusername, newuseremail)
   if (!newusername && !newuseremail) {
     const userID = generateRandomString()
     Object.assign(userDatabase, {[userID]: {userID: userID, firstname: req.body.firstname, lastname: req.body.lastname, username: req.body.username, password: req.body.password, email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode}})
@@ -339,24 +373,21 @@ app.post("/submitregister", (req, res) => {
 app.post("/editprofile", (req, res) => {
   if (!req.cookies.userID) {
     res.redirect("/login");
-  }  else {
-  res.redirect(`/profile/edit`);
+  } else {
+    res.redirect(`/profile/edit`);
   }
 });
 
 app.post("/profileupdate", (req, res) => {
   if (!req.cookies.userID) {
     res.redirect("/login");
-  }  else {
-  const email = findKeyByValueNumE(userDatabase, req.body.email);
-  const username = findKeyByValueNumU(userDatabase, req.body.username);
-  console.log(email);
-  console.log(username);
+  } else {
+    const email = findKeyByValueNumE(userDatabase, req.body.email);
+    const username = findKeyByValueNumU(userDatabase, req.body.username);
   if ((email.length === 0 || (email.length === 1 && email[0] === req.cookies.userID)) && (username.length === 0 || (username.length === 1 && username[0] === req.cookies.userID))) {
     Object.assign(userDatabase[req.cookies.userID], {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, username: req.body.username, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode})
-    console.log(userDatabase)
     res.redirect(`/profile`);
-    
+
   } else if ((username.length > 1 || username[0] !== req.cookies.userID) && (email.length > 1 || email[0] !== req.cookies.userID)) {
     Object.assign(userDatabase[req.cookies.userID], {firstname: req.body.firstname, lastname: req.body.lastname, email: req.body.email, address1: req.body.address1, address2: req.body.address2, city: req.body.city, province: req.body.province, postalcode: req.body.postalcode})
     res.cookie("newusername", req.body.username)
@@ -379,10 +410,8 @@ app.post("/profileupdate", (req, res) => {
 app.post("/deleteprofile", (req, res) => {
   if (!req.cookies.userID) {
     res.redirect("/login");
-  }  else {
-  console.log("info", req.body)
+  } else {
   delete userDatabase[req.cookies.userID]
-  console.log(userDatabase);
   res.clearCookie("userID")
   res.redirect(`/urls`);
   }
@@ -392,7 +421,7 @@ app.post("/userprofile", (req, res) => {
   if (!req.cookies.userID) {
     res.redirect("/login");
   }  else {
-  res.redirect(`/profile`);
+    res.redirect(`/profile`);
   }
 });
 //----------------------------------------------------------
@@ -432,42 +461,54 @@ app.use((req, res, next) => {
 //----------------------------------------------------------
 
 
+//----------------------------------------------------------
+// Object Key Search
+const findKeyByValue = (object, value) => {
+  for (let item in object) {
+    if (value === object[item].username) {
+      return item;
+    }
+  }
+};
+
+const findKeyByValueEmail = (object, value) => {
+  for (let item in object) {
+    if (value === object[item].email) {
+      return item;
+    }
+  }
+};
+
+const findKeyByValueNumE = (object, value) => {
+  let array = [];
+  for (let item in object) {
+    if (value === object[item].email) {
+      array.push(item);
+    }
+  }
+  return array;
+};
+
+const findKeyByValueNumU = (object, value) => {
+  let array = [];
+  for (let item in object) {
+    if (value === object[item].username) {
+      array.push(item);
+    }
+  }
+  return array;
+};
+//----------------------------------------------------------
 
 //----------------------------------------------------------
 // Object Key Search
-const findKeyByValue = function(object, value) {
-  for (let item in object) {
-    if (value === object[item].username) {
-      return item;
+const urlsForUserID = (user) => {
+  let data = {};
+  for (let id in urlDatabase) {
+    if (urlDatabase[id].userID === user) {
+      Object.assign(data, {[id] : urlDatabase[id]});
     }
   }
-};
-
-const findKeyByValueEmail = function(object, value) {
-  for (let item in object) {
-    if (value === object[item].email) {
-      return item;
-    }
-  }
-};
-
-const findKeyByValueNumE = function(object, value) {
-  let array = [];
-  for (let item in object) {
-    if (value === object[item].email) {
-      array.push(item);
-    }
-  }
-  return array;
-};
-
-const findKeyByValueNumU = function(object, value) {
-  let array = [];
-  for (let item in object) {
-    if (value === object[item].username) {
-      array.push(item);
-    }
-  }
-  return array;
+  return data;
 };
 //----------------------------------------------------------

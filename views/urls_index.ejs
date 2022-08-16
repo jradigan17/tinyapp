@@ -41,11 +41,11 @@
                 </form>
               </td>
               <td class="align-middle" style="color:rgb(231, 246, 246)">
-                <%= urls[id] %>
+                <%= urls[id].longURL %>
               </td>
               <td class="align-middle blockquote text-center">
                 <form action="/urls/<%= id %>/edit" method="POST">
-                  <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Edit" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-solid fa-pen-to-square"></i></button>
+                  <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Edit Tiny URL <%= id %>" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-solid fa-pen-to-square"></i></button>
                 </form>
               </td>
               <td class="align-middle blockquote text-center">
