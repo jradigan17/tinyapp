@@ -26,8 +26,9 @@ const {conColor, conLine} = require('../../formatting/globalvar');
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const bcrypt = require("bcryptjs");
-const cookieSession = require('cookie-session')
+const cookieSession = require('cookie-session');
 const request = require('request');
+const { generateRandomString, findKeyByValue, findKeyByValueEmail, findKeyByValueNumE, findKeyByValueNumU, urlsForUserID, deleteUserIDurls} = require('./helper');
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -46,7 +47,7 @@ app.use(cookieSession({
   keys: ['key1'],
   // Cookie Options
   maxAge: 60 * 1000 // (24 * 60 * 60 * 1000) // 24 hours
-}))
+}));
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -75,13 +76,13 @@ app.get("/urls.json", (req, res) => {
   if (!req.session.userID) {
     res.redirect("/login");
   } else {
-    const data = urlsForUserID(req.session.userID);
+    const data = urlsForUserID(req.session.userID, urlDatabase);
     res.json(data);
   }
 });
 
 app.get("/urls", (req, res) => {
-  const data = urlsForUserID(req.session.userID);
+  const data = urlsForUserID(req.session.userID, urlDatabase);
   const templateVars = {user: userDatabase[req.session.userID], urls: data};
   if (!req.session.userID) {
     res.redirect("/login");
@@ -170,19 +171,19 @@ app.get("/failedregister", (req, res) => {
     province: req.session.province,
     postalcode: req.session.postalcode};
   const templateVars = {user: userDatabase[req.session.userID], tmpuser, newuseremail: req.session.newuseremail, newusername: req.session.newusername};
-  req.session.username = null
-  req.session.firstname = null
-  req.session.lastname = null
-  req.session.username = null
-  req.session.password = null
-  req.session.email = null
-  req.session.address1 = null
-  req.session.address2 = null
-  req.session.city = null
-  req.session.province = null
-  req.session.postalcode = null
-  req.session.newuseremail = null
-  req.session.newusername = null
+  req.session.username = null;
+  req.session.firstname = null;
+  req.session.lastname = null;
+  req.session.username = null;
+  req.session.password = null;
+  req.session.email = null;
+  req.session.address1 = null;
+  req.session.address2 = null;
+  req.session.city = null;
+  req.session.province = null;
+  req.session.postalcode = null;
+  req.session.newuseremail = null;
+  req.session.newusername = null;
   res.render("urls_registerfail", templateVars);
 });
 
@@ -241,8 +242,8 @@ app.get("/profile/err", (req, res) => {
   if (!req.session.userID) {
     res.redirect("/login");
   } else {
-    req.session.newuseremail = null
-    req.session.newusername = null
+    req.session.newuseremail = null;
+    req.session.newusername = null;
     res.render("urls_editprofileerr", templateVars);
   }
 });
@@ -265,15 +266,15 @@ app.post("/urls/new", (req, res) => {
     request(longURL, (error, response, body) => {
       // Resource URL Checking
       if (response && response.statusCode === 404) {
-        return res.redirect(`/invalid`)
+        return res.redirect(`/invalid`);
       } else if (error) {
-        return res.redirect(`/invalid`)
+        return res.redirect(`/invalid`);
       } else {
         const id = generateRandomString();
         urlDatabase[id] = {longURL: longURL, userID: req.session.userID};
         res.redirect(`/urls/${id}`);
       }
-    })
+    });
   }
 });
 
@@ -361,14 +362,14 @@ app.post("/urls/:id/update", (req, res) => {
       request(longURL, (error, response, body) => {
         // Resource URL Checking
         if (response && response.statusCode === 404) {
-          return res.redirect(`/urls/${req.params.id}/invalid`)
+          return res.redirect(`/urls/${req.params.id}/invalid`);
         } else if (error) {
-          return res.redirect(`/urls/${req.params.id}/invalid`)
+          return res.redirect(`/urls/${req.params.id}/invalid`);
         } else {
           urlDatabase[req.params.id] = {longURL: longURL, userID: req.session.userID};
           res.redirect(`/urls/${req.params.id}`);
         }
-      })
+      });
     }
   }
 });
@@ -383,30 +384,30 @@ app.post("/submitregister", (req, res) => {
     req.session.userID = userID;
     res.redirect(`/profile`);
   } else if (newuseremail) {
-    req.session.firstname = req.body.firstname
-    req.session.lastname = req.body.lastname
-    req.session.username = req.body.username
-    req.session.password = req.body.password
-    req.session.email = req.body.email
-    req.session.address1 = req.body.address1
-    req.session.address2 = req.body.address2
-    req.session.city = req.body.city
-    req.session.province = req.body.province
-    req.session.postalcode = req.body.postalcode
-    req.session.newuseremail = newuseremail
+    req.session.firstname = req.body.firstname;
+    req.session.lastname = req.body.lastname;
+    req.session.username = req.body.username;
+    req.session.password = req.body.password;
+    req.session.email = req.body.email;
+    req.session.address1 = req.body.address1;
+    req.session.address2 = req.body.address2;
+    req.session.city = req.body.city;
+    req.session.province = req.body.province;
+    req.session.postalcode = req.body.postalcode;
+    req.session.newuseremail = newuseremail;
     return res.redirect(`/failedregister`);
   } else if (newusername) {
-    req.session.firstname = req.body.firstname
-    req.session.lastname = req.body.lastname
-    req.session.username = req.body.username
-    req.session.password = req.body.password
-    req.session.email = req.body.email
-    req.session.address1 = req.body.address1
-    req.session.address2 = req.body.address2
-    req.session.city = req.body.city
-    req.session.province = req.body.province
-    req.session.postalcode = req.body.postalcode
-    req.session.newusername = newusername
+    req.session.firstname = req.body.firstname;
+    req.session.lastname = req.body.lastname;
+    req.session.username = req.body.username;
+    req.session.password = req.body.password;
+    req.session.email = req.body.email;
+    req.session.address1 = req.body.address1;
+    req.session.address2 = req.body.address2;
+    req.session.city = req.body.city;
+    req.session.province = req.body.province;
+    req.session.postalcode = req.body.postalcode;
+    req.session.newusername = newusername;
     return res.redirect(`/failedregister`);
   }
 });
@@ -452,7 +453,7 @@ app.post("/deleteprofile", (req, res) => {
   if (!req.session.userID) {
     res.redirect("/login");
   } else {
-    deleteUserIDurls(req.session.userID)
+    deleteUserIDurls(req.session.userID, urlDatabase);
     delete userDatabase[req.session.userID];
     req.session.userID = null;
     res.redirect(`/urls`);
@@ -466,27 +467,6 @@ app.post("/userprofile", (req, res) => {
     res.redirect(`/profile`);
   }
 });
-//----------------------------------------------------------
-
-//----------------------------------------------------------
-// Generate Random 6 Character Alphanumeric String - 0-9 & A-Z & a-z
-const generateRandomString = () => {
-  let choice = [];
-  let random = "";
-  for (let i = 48; i < 58; i ++) {
-    choice.push(i);
-  }
-  for (let j = 65; j < 91; j ++) {
-    choice.push(j);
-  }
-  for (let y = 97; y < 123; y ++) {
-    choice.push(y);
-  }
-  for (let x = 0; x < 6; x++) {
-    random += String.fromCharCode(choice[Math.floor(Math.random() * (choice.length))]);
-  }
-  return random;
-};
 //----------------------------------------------------------
 
 
@@ -503,65 +483,3 @@ app.use((req, res, next) => {
 //----------------------------------------------------------
 
 
-//----------------------------------------------------------
-// Object Key Search
-const findKeyByValue = (object, value) => {
-  for (let item in object) {
-    if (value === object[item].username) {
-      return item;
-    }
-  }
-};
-
-const findKeyByValueEmail = (object, value) => {
-  for (let item in object) {
-    if (value === object[item].email) {
-      return item;
-    }
-  }
-};
-
-const findKeyByValueNumE = (object, value) => {
-  let array = [];
-  for (let item in object) {
-    if (value === object[item].email) {
-      array.push(item);
-    }
-  }
-  return array;
-};
-
-const findKeyByValueNumU = (object, value) => {
-  let array = [];
-  for (let item in object) {
-    if (value === object[item].username) {
-      array.push(item);
-    }
-  }
-  return array;
-};
-//----------------------------------------------------------
-
-//----------------------------------------------------------
-// Object Key Search - URLs to User
-const urlsForUserID = (user) => {
-  let data = {};
-  for (let id in urlDatabase) {
-    if (urlDatabase[id].userID === user) {
-      Object.assign(data, {[id] : urlDatabase[id]});
-    }
-  }
-  return data;
-};
-//----------------------------------------------------------
-
-//----------------------------------------------------------
-// Object Key Search - Delete User URLs
-const deleteUserIDurls = (user) => {
-  for (let id in urlDatabase) {
-    if (urlDatabase[id].userID === user) {
-      delete urlDatabase[id];
-    }
-  }
-};
-//----------------------------------------------------------
