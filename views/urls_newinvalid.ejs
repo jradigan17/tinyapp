@@ -21,12 +21,15 @@
     <form class="form-inline needs-validation" action="/urls/new" method="POST">
       <div class="form-group mb-2">
         <label for="longURL">Enter a URL:</label>
-        <input class="form-control" type="text" name="longURL" placeholder="http://" style="width: 300px; margin: 1em"
-          required>
+        <input class="form-control border-danger" type="text" style="width: 300px; margin: 1em;background-color:rgb(249, 185, 185)" name="longURL" placeholder="http://" required>
         <button type="submit" class="btn" style="background-color:#ff8000; color:black">Submit</button>
       </div>
     </form>
+    <span class="form-text font-size: small" style="color: rgb(243, 18, 18)">Invalid URL.
+    </span>
+
   </main>
+
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

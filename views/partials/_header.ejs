@@ -2,92 +2,67 @@
   <header>
     <nav class="navbar navbar-expand-md navbar-light justify-content-between" style="background-color:#ff8000">
       <a class="navbar-brand" href="/urls">TinyApp</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
-      <form id="myform" action="/register" method="POST"></form>
-  <form class="form-inline" action="/login" method="POST">
-    <button class="btn form-control my-2 my-sm-0 border-secondary" type="submit" data-toggle="tooltip" data-placement="top" title="Login" style="background-color:#ff8000; color:black">Login  <i class="fa-solid fa-user"></i></button>
+        <form id="myform" action="/register" method="POST"></form>
+        <form class="form-inline" action="/login" method="POST">
+          <button class="btn form-control my-2 my-sm-0 border-secondary" type="submit" data-toggle="tooltip"
+            data-placement="top" title="Login" style="background-color:#ff8000; color:black">Login <i
+              class="fa-solid fa-user"></i></button>
 
-    <div class="form-group mx-sm-1 align-middle text-right">
-      <label style="color:black">  </label>
-    </div>
+          <div class="form-group mx-sm-1 align-middle text-right">
+            <label style="color:black"> </label>
+          </div>
 
-    <button form="myform" class="btn form-control my-2 my-sm-0 border-secondary" type="submit" data-toggle="tooltip" data-placement="top" title="Register" style="background-color:#ff8000; color:black">Register</button>
-  </form>
+          <button form="myform" class="btn form-control my-2 my-sm-0 border-secondary" type="submit"
+            data-toggle="tooltip" data-placement="top" title="Register"
+            style="background-color:#ff8000; color:black">Register</button>
+        </form>
       </div>
-<% } else{ %> 
-  <header>
-    <nav class="navbar navbar-expand-md navbar-light" style="background-color:#ff8000">
-      <a class="navbar-brand" href="/urls">TinyApp</a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarNavAltMarkup"
-        aria-controls="navbarNavAltMarkup"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
-  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-      <li class="nav-item active">
-        <a class="nav-link" href="/urls">My URLs <span class="sr-only">(current)</span></a>
-      </li>
-      <li class="nav-item active">
-        <a class="nav-link" href="/urls/new">Create New URL</a>
-      </li>
-    </ul> 
-  <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
-    <div class="form-group mx-sm-1 align-middle text-right">
-      <label style="color:black"><%= user.username %></label>
-    </div>
-    <div class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle align-middle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip" data-placement="top" title="User Settings">
-        <i class="fa-solid fa-user"></i>
-      </a>
-      <div class="dropdown-menu dropdown-menu-right" style="background-color:#ff8000" aria-labelledby="navbarDropdown">
-        <a class="dropdown-item" href="/profile">User Profile</a>
-        <a class="dropdown-item" href="#">Reset Password</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="/logout">Logout</a>
-      </div>
-    </div>
-  </form>
-<% } %>
-
-      
-    </div>
-  </nav>
-</header>
+      <% } else{ %>
+        <header>
+          <nav class="navbar navbar-expand-md navbar-light" style="background-color:#ff8000">
+            <a class="navbar-brand" href="/urls">TinyApp</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+              <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+                <li class="nav-item active">
+                  <a class="nav-link" href="/urls">My URLs <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/urls/new">Create New URL</a>
+                </li>
+              </ul>
+              <form class="form-inline my-2 my-lg-0" action="/logout" method="POST">
+                <div class="form-group mx-sm-1 align-middle text-right">
+                  <label style="color:black">
+                    <%= user.username %>
+                  </label>
+                </div>
+                <div class="nav-item dropdown">
+                  <a class="nav-link dropdown-toggle align-middle" href="#" id="navbarDropdown" role="button"
+                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" data-toggle="tooltip"
+                    data-placement="top" title="User Settings">
+                    <i class="fa-solid fa-user"></i>
+                  </a>
+                  <div class="dropdown-menu dropdown-menu-right" style="background-color:#ff8000"
+                    aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="/profile">User Profile</a>
+                    <a class="dropdown-item" href="#">Reset Password</a>
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="/logout">Logout</a>
+                  </div>
+                </div>
+              </form>
+              <% } %>
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+            </div>
+          </nav>
+        </header>
