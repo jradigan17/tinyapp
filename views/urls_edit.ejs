@@ -15,7 +15,9 @@
     <%- include('partials/_header') %>
   </header>
 
-  <div class="card text-center" style="background-color:rgb(80, 78, 78)">
+  <% if (!invalid) { %>
+  
+    <div class="card text-center" style="background-color:rgb(80, 78, 78)">
     <div class="card-header"></div>
     <div class="card-body" style="background-color:black; color: whitesmoke">
       <div style="width: 20%; float:left">
@@ -26,7 +28,7 @@
         </form>
       </div>
       <div style="width: 80%; float:right">
-        <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
+        <form id="myform" action="/urls/<%= id %>/delete/?_method=DELETE" method="POST"></form>
         <form class="text-right" action="/urls/<%= id %>/edit" method="POST">
           <button form="myform" type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Delete"
             style="background-color:rgb(242, 22, 22); color:black"><i class="fa-solid fa-trash-can"></i></button>
@@ -42,8 +44,7 @@
           <%= id %>
         </a>
       </p>
-      <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update"
-        method="POST">
+      <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update/?_method=PUT" method="POST">
         <div class="form-group mb-2">
           <label for="longURL">Enter New URL:</label>
           <input class="form-control mx-sm-3" type="text" name="longURL" placeholder="http://"
@@ -54,6 +55,54 @@
     </div>
     <div class="card-footer text-muted"></div>
   </div>
+
+  <% } else { %>
+
+    <div class="card text-center" style="background-color:rgb(80, 78, 78)">
+      <div class="card-header"></div>
+      <div class="card-body" style="background-color:black; color: whitesmoke">
+        <div style="width: 20%; float:left">
+          <form class="text-left" action="/urls/<%= id %>/view" method="POST">
+            <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Cancel Changes"
+              style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i class="fa-regular fa-circle-left"></i>
+              Cancel</button>
+          </form>
+        </div>
+        <div style="width: 80%; float:right">
+          <form id="myform" action="/urls/<%= id %>/delete/?_method=DELETE"  method="POST"></form>
+          <form class="text-right" action="/urls/<%= id %>/edit" method="POST">
+            <button form="myform" type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Delete"
+              style="background-color:rgb(242, 22, 22); color:black"><i class="fa-solid fa-trash-can"></i></button>
+          </form>
+        </div>
+        <h5 class="card-title">Tiny URL for: <a href="<%= longURL %>" data-toggle="tooltip" data-placement="top"
+            title="<%= longURL %>" target="_blank">
+            <%= longURL %>
+          </a></h5>
+        <p class="card-text">
+          Tiny URL ID: <a href="/u/<%= id %>" data-toggle="tooltip" data-placement="top" title="<%= longURL %>"
+            target="_blank">
+            <%= id %>
+          </a>
+        </p>
+        <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update/?_method=PUT" method="POST">
+          <div class="form-group mb-2">
+            <label for="longURL">Enter New URL:</label>
+            <input class="form-control mx-sm-3 border-danger" type="text" name="longURL" placeholder="http://"
+              style="width: 300px; background-color:rgb(249, 185, 185); margin: 1em" required>
+            <button type="submit" class="btn" style="background-color:#ff8000; color:black">Submit</button>
+          </div>
+        </form>
+        <span class="form-text font-size: small justify-content-center" style="color: rgb(243, 18, 18)">Invalid URL.
+        </span>
+      </div>
+      <div class="card-footer text-muted"></div>
+    </div>
+
+
+    <% } %>
+
+
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

@@ -26,7 +26,7 @@
         </form>
       </div>
       <div style="width: 80%; float:right">
-        <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
+        <form id="myform" action="/urls/<%= id %>/delete/?_method=DELETE"  method="POST"></form>
         <form class="text-right" action="/urls/<%= id %>/edit" method="POST">
           <button form="myform" type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Delete"
             style="background-color:rgb(242, 22, 22); color:black"><i class="fa-solid fa-trash-can"></i></button>
@@ -42,8 +42,7 @@
           <%= id %>
         </a>
       </p>
-      <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update"
-        method="POST">
+      <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update" method="POST">
         <div class="form-group">
           <label for="longURL">Enter New URL:</label>
           <input class="form-control mx-sm-3 border-danger" type="text" name="longURL" placeholder="http://"

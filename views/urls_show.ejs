@@ -47,7 +47,7 @@
             </form>
           </div>
           <div style="width: 80%; float:right">
-            <form id="myform" action="/urls/<%= id %>/delete" method="POST"></form>
+            <form id="myform" action="/urls/<%= id %>/delete/?_method=DELETE" method="POST"></form>
             <form class="text-right" action="/urls/<%= id %>/edit" method="POST">
               <button type="submit" class="btn" data-toggle="tooltip" data-placement="top" title="Edit"
                 style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i

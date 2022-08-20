@@ -18,7 +18,9 @@
     <%- include('partials/_header') %>
   </header>
 
-  <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
+  <% if(!newuseremail && !newusername) { %>
+
+  <div class="card w-75" style="margin: 2em; background-color: black; color: whitesmoke">
     <div class="card-body">
       <h3 class="card-title">User Registration Form</h3>
 
@@ -94,6 +96,269 @@
       </form>
     </div>
   </div>
+
+  <% } else if(newuseremail && newusername) { %>
+
+    <div class="card w-75" style="margin: 2em; background-color: black; color: whitesmoke">
+      <div class="card-body">
+        <h3 class="card-title">User Registration Form</h3>
+
+        <form name="registration" class="row g-3 justify-content-center needs-validation" action="/submitregister"
+          method="POST">
+          <div class="col-md-4">
+            <label for="firstname" class="form-label">First Name<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="firstname" class="form-control" name="firstname" value="<%= tmpuser.firstname %>" required
+              minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label for="lastname" class="form-label">Last Name<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="lastname" class="form-control mb-3" name="lastname" value="<%= tmpuser.lastname %>" required
+              minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label for="username" class="form-label">Username<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="username" class="form-control border-danger" name="username" value="<%= tmpuser.username %>"
+              style="background-color:rgb(249, 185, 185)" required minlength="3">
+            <span id="passwordHelpInline" class="form-text font-size: small mb-3"
+              style="color: rgb(243, 18, 18)">Username Already Exists.
+            </span>
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email<span aria-label="required" style="color:red">*</span></label>
+            <input type="email" class="form-control border-danger" name="email" value="<%= tmpuser.email %>"
+              style="background-color:rgb(249, 185, 185)" required>
+            <span id="passwordHelpInline" class="form-text font-size: small mb-3" style="color: rgb(243, 18, 18)">Email
+              Already Exists.
+            </span>
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="password" class="form-control" name="password" value="<%= tmpuser.password %>"
+              required></input>
+            </span>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="address" class="mb-3 form-control" name="address1" value="<%= tmpuser.address1 %>" />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Address 2</label>
+            <input type="address2" class="mb-3 form-control" name="address2" value="<%= tmpuser.address2 %>" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">City</label>
+            <input type="city" class="mb-5 form-control" name="city" value="<%= tmpuser.city %>" />
+          </div>
+          <div class="col-md-3">
+            <label for="inputProv" class="form-label">Province</label>
+            <select name="province" class="form-select form-control">
+              <option selected>
+                <%= tmpuser.province %>
+              </option>
+              <option value="AB">AB</option>
+              <option value="BC">BC</option>
+              <option value="MB">MB</option>
+              <option value="NB">NB</option>
+              <option value="NL">NL</option>
+              <option value="NS">NS</option>
+              <option value="NT">NT</option>
+              <option value="NU">NU</option>
+              <option value="ON">ON</option>
+              <option value="PE">PE</option>
+              <option value="QC">QC</option>
+              <option value="SK">SK</option>
+              <option value="YT">YT</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="inputPostalCode" class="form-label">Postal Code</label>
+            <input type="postal" class="form-control" name="postalcode" value="<%= tmpuser.postalcode %>" />
+          </div>
+          <div class="col-12 mb-3">
+            <button type="submit" class="btn" style="background-color:#ff8000; color:black">Create An Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+  <% } else if(newuseremail) { %>
+
+    <div class="card w-75" style="margin: 2em; background-color: black; color: whitesmoke">
+      <div class="card-body">
+        <h3 class="card-title">User Registration Form</h3>
+
+        <form name="registration" class="row g-3 justify-content-center needs-validation" action="/submitregister"
+          method="POST">
+          <div class="col-md-4">
+            <label for="firstname" class="form-label">First Name<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="firstname" class="form-control" name="firstname" value="<%= tmpuser.firstname %>" required
+              minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label for="lastname" class="form-label">Last Name<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="lastname" class="form-control mb-3" name="lastname" value="<%= tmpuser.lastname %>" required
+              minlength="2">
+          </div>
+          <div class="col-md-4">
+            <label for="username" class="form-label">Username<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="username" class="form-control" name="username" value="<%= tmpuser.username %>" required
+              minlength="3">
+          </div>
+
+          <div class="col-md-6">
+            <label for="email" class="form-label">Email<span aria-label="required" style="color:red">*</span></label>
+            <input type="email" class="form-control border-danger" name="email" value="<%= tmpuser.email %>"
+              style="background-color:rgb(249, 185, 185)" required>
+            <span id="passwordHelpInline" class="form-text font-size: small mb-3" style="color: rgb(243, 18, 18)">Email
+              Already Exists.
+            </span>
+          </div>
+          <div class="col-md-6">
+            <label for="password" class="form-label">Password<span aria-label="required"
+                style="color:red">*</span></label>
+            <input type="password" class="form-control" name="password" value="<%= tmpuser.password %>"
+              required></input>
+            </span>
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label">Address</label>
+            <input type="address" class="mb-3 form-control" name="address1" value="<%= tmpuser.address1 %>" />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Address 2</label>
+            <input type="address2" class="mb-3 form-control" name="address2" value="<%= tmpuser.address2 %>" />
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">City</label>
+            <input type="city" class="mb-5 form-control" name="city" value="<%= tmpuser.city %>" />
+          </div>
+          <div class="col-md-3">
+            <label for="inputProv" class="form-label">Province</label>
+            <select name="province" class="form-select form-control">
+              <option selected>
+                <%= tmpuser.province %>
+              </option>
+              <option value="AB">AB</option>
+              <option value="BC">BC</option>
+              <option value="MB">MB</option>
+              <option value="NB">NB</option>
+              <option value="NL">NL</option>
+              <option value="NS">NS</option>
+              <option value="NT">NT</option>
+              <option value="NU">NU</option>
+              <option value="ON">ON</option>
+              <option value="PE">PE</option>
+              <option value="QC">QC</option>
+              <option value="SK">SK</option>
+              <option value="YT">YT</option>
+            </select>
+          </div>
+          <div class="col-md-3">
+            <label for="inputPostalCode" class="form-label">Postal Code</label>
+            <input type="postal" class="form-control" name="postalcode" value="<%= tmpuser.postalcode %>" />
+          </div>
+          <div class="col-12 mb-3">
+            <button type="submit" class="btn" style="background-color:#ff8000; color:black">Create An Account</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+
+    <% } else { %>
+      <div class="card w-75" style="margin: 2em; background-color: black; color: whitesmoke">
+        <div class="card-body">
+          <h3 class="card-title">User Registration Form</h3>
+
+          <form name="registration" class="row g-3 justify-content-center needs-validation" action="/submitregister"
+            method="POST">
+            <div class="col-md-4">
+              <label for="firstname" class="form-label">First Name<span aria-label="required"
+                  style="color:red">*</span></label>
+              <input type="firstname" class="form-control" name="firstname" value="<%= tmpuser.firstname %>" required
+                minlength="2">
+            </div>
+            <div class="col-md-4">
+              <label for="lastname" class="form-label">Last Name<span aria-label="required"
+                  style="color:red">*</span></label>
+              <input type="lastname" class="form-control mb-3" name="lastname" value="<%= tmpuser.lastname %>" required
+                minlength="2">
+            </div>
+            <div class="col-md-4">
+              <label for="username" class="form-label">Username<span aria-label="required"
+                  style="color:red">*</span></label>
+              <input type="username" class="form-control border-danger" name="username" value="<%= tmpuser.username %>"
+                style="background-color:rgb(249, 185, 185)" required minlength="3">
+              <span id="passwordHelpInline" class="form-text font-size: small mb-3"
+                style="color: rgb(243, 18, 18)">Username Already Exists.
+              </span>
+            </div>
+            <div class="col-md-6">
+              <label for="email" class="form-label">Email<span aria-label="required" style="color:red">*</span></label>
+              <input type="email" class="form-control" name="email" value="<%= tmpuser.email %>" required>
+            </div>
+            <div class="col-md-6">
+              <label for="password" class="form-label">Password<span aria-label="required"
+                  style="color:red">*</span></label>
+              <input type="password" class="form-control" name="password" value="<%= tmpuser.password %>"
+                required></input>
+              </span>
+            </div>
+            <div class="col-12">
+              <label for="inputAddress" class="form-label">Address</label>
+              <input type="address" class="mb-3 form-control" name="address1" value="<%= tmpuser.address1 %>" />
+            </div>
+            <div class="col-12">
+              <label for="inputAddress2" class="form-label">Address 2</label>
+              <input type="address2" class="mb-3 form-control" name="address2" value="<%= tmpuser.address2 %>" />
+            </div>
+            <div class="col-md-6">
+              <label for="inputCity" class="form-label">City</label>
+              <input type="city" class="mb-5 form-control" name="city" value="<%= tmpuser.city %>" />
+            </div>
+            <div class="col-md-3">
+              <label for="inputProv" class="form-label">Province</label>
+              <select name="province" class="form-select form-control">
+                <option selected>
+                  <%= tmpuser.province %>
+                </option>
+                <option value="AB">AB</option>
+                <option value="BC">BC</option>
+                <option value="MB">MB</option>
+                <option value="NB">NB</option>
+                <option value="NL">NL</option>
+                <option value="NS">NS</option>
+                <option value="NT">NT</option>
+                <option value="NU">NU</option>
+                <option value="ON">ON</option>
+                <option value="PE">PE</option>
+                <option value="QC">QC</option>
+                <option value="SK">SK</option>
+                <option value="YT">YT</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label for="inputPostalCode" class="form-label">Postal Code</label>
+              <input type="postal" class="form-control" name="postalcode" value="<%= tmpuser.postalcode %>" />
+            </div>
+            <div class="col-12 mb-3">
+              <button type="submit" class="btn" style="background-color:#ff8000; color:black">Create An Account</button>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      <% } %>
+
+
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
