@@ -9,7 +9,7 @@
     integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
   <!-- Font Awesome -->
   <script src="https://kit.fontawesome.com/10efa60a15.js" crossorigin="anonymous"></script>
-  <title>New URL - TinyApp Example</title>
+  <title>TinyApp - Login</title>
 </head>
 
 <body style="background-color:black; color: whitesmoke">
@@ -31,11 +31,16 @@
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control mb-3" name="password" placeholder="Password" required>
         </div>
-        <div class="col-12 mb-4">
+        <div class="col-12">
           <button type="submit" class="btn" style="background-color:#ff8000; color:black">Login</button>
         </div>
       </form>
+      <div style="margin: 3em">Need an account? <a href="/register">Register Here</a>
+      </div>
     </main>
+  </div>
+
+
 
 
     <% } else if (!username && !password) { %>
@@ -60,7 +65,11 @@
               <button type="submit" class="btn" style="background-color:#ff8000; color:black">Login</button>
             </div>
           </form>
+          <div style="margin: 3em">Need an account? <a href="/register">Register Here</a>
+          </div>
         </main>
+      </div>
+
   
         <% } else { %>
           <div class="card w-50" style="margin: 2em; background-color: black; color: whitesmoke">
@@ -85,7 +94,10 @@
                   <button type="submit" class="btn" style="background-color:#ff8000; color:black">Login</button>
                 </div>
               </form>
+              <div style="margin: 3em">Need an account? <a href="/register">Register Here</a>
+              </div>
             </main>
+          </div>
   
   
             <% } %>

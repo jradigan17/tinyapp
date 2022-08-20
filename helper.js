@@ -88,11 +88,11 @@ const deleteUserIDurls = (user, urlDatabase) => {
 //----------------------------------------------------------
 
 module.exports = {
-  generateRandomString, 
-  findKeyByValue, 
-  findKeyByValueEmail, 
-  findKeyByValueNumE, 
-  findKeyByValueNumU, 
-  urlsForUserID, 
+  generateRandomString,
+  findKeyByValue,
+  findKeyByValueEmail,
+  findKeyByValueNumE,
+  findKeyByValueNumU,
+  urlsForUserID,
   deleteUserIDurls
-}
+};

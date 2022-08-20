@@ -1,22 +1,23 @@
 //----------------------------------------------------------
-// README -
-// TODO - add light & dark mode
+// TO DO
+//      - add light & dark mode
+//      - tab title icon
+//      - favourites - sorting
+//      - confirm delete
+//      - demo page
+//      - server side responses/cookie monster
+//      - delete all cookies on exit
+//      - keep logged in
+//      - shut down server
+//      - add more mocha chai tests
+//
+// MUST DO
 //      - forgot password
 //      - change password
 //      - date created
 //      - date modified
-//      - favourites - sorting
-//      - confirm delete
 //      - clipboard to copy
-//      - demo page
 //      - add footer
-//      - clean up server side & comments
-//      - delete all cookies on exit
-//      - home page
-//      - tab title
-//      - keep logged in
-//      - shut down server
-//      - add more mocha chai tests
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -50,7 +51,7 @@ app.use(cookieSession({
   maxAge: 60 * 1000 // (24 * 60 * 60 * 1000) // 24 hours
 }));
 // override with POST having ?_method=DELETE
-app.use(methodOverride('_method'))
+app.use(methodOverride('_method'));
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -72,7 +73,11 @@ const userDatabase = {};
 //----------------------------------------------------------
 // Get Actions - Register Root Path
 app.get("/", (req, res) => {
-  res.send("Hello!");
+  if (!req.session.userID) {
+    res.redirect("/login");
+  } else {
+    res.redirect("/urls");
+  }
 });
 //----------------------------------------------------------
 
