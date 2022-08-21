@@ -11,12 +11,7 @@
 //      - shut down server
 //      - add more mocha chai tests
 //      - bar chart
-//
-// MUST DO
-//      - forgot password
-//      - change password
-//      - clipboard to copy
-//      - add footer
+//      - forgot password/password reset w/ email
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -189,10 +184,13 @@ app.get("/u/:id", (req, res) => {
     const longURL = urlDatabase[req.params.id].longURL;
     urlDatabase[req.params.id].visit += 1;
     let myobject = {};
-    if (!req.session.userID) {
-      myobject.userID = "unregistered";
-    } else {
+    if (!req.session.userID && !req.session.visitor) {
+      myobject.userID = '*' + generateRandomString();
+      req.session.visitor = myobject.userID;
+    } else if (req.session.userID) {
       myobject.userID = [req.session.userID];
+    } else {
+      myobject.userID = [req.session.visitor];
     }
     myobject.dateCreated = myDateObject.dateFull();
     urlDatabase[req.params.id].datalog.push(myobject);
@@ -247,7 +245,7 @@ app.get("/register", (req, res) => {
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-// Get Actions - Profile
+// Get Actions - Profile & Password
 app.get("/profile", (req, res) => {
   const templateVars = {user: userDatabase[req.session.userID]};
   if (!req.session.userID) {
@@ -265,6 +263,15 @@ app.get("/profile/edit", (req, res) => {
     res.render("urls_editprofile", templateVars);
   }
 });
+
+app.get("/profile/password", (req, res) => {
+  const templateVars = {user: userDatabase[req.session.userID], currentpassword: true};
+  if (!req.session.userID) {
+    res.redirect("/login");
+  } else {
+    res.render("urls_password", templateVars);
+  }
+});
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -275,7 +282,7 @@ app.listen(PORT, () => {
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-// Post Actions - URLs
+// Post/Put/Delete Actions - URLs
 app.post("/urls", (req, res) => {
   if (!req.session.userID) {
     res.redirect("/login");
@@ -434,7 +441,7 @@ app.post("/submitregister", (req, res) => {
 //----------------------------------------------------------
 
 //----------------------------------------------------------
-// Post Actions - User Profile
+// Post/Put/Delete Actions - User Profile
 app.post("/userprofile", (req, res) => {
   if (!req.session.userID) {
     res.redirect("/login");
@@ -484,6 +491,18 @@ app.put("/profileupdate", (req, res) => {
       const templateVars = {user: userDatabase[req.session.userID], newusername: req.body.username, newuseremail: false, tmpuser: tmpuser};
       return res.render("urls_editprofile", templateVars);
     }
+  }
+});
+
+app.put("/passwordreset", (req, res) => {
+  if (!req.session.userID) {
+    res.redirect("/login");
+  } else if (!bcrypt.compareSync(req.body.currentpassword, userDatabase[req.session.userID].password)) {
+    const templateVars = {user: userDatabase[req.session.userID], currentpassword: false};
+    return res.render("urls_password", templateVars);
+  } else {
+    userDatabase[req.session.userID].password = bcrypt.hashSync(req.body.newpassword, 10)
+    res.redirect(`/urls`);
   }
 });
 

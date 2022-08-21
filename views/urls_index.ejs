@@ -41,7 +41,7 @@
                     title="View Tiny URL <%= id %> Details"
                     style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)"><i
                       class="fa-solid fa-magnifying-glass"></i> </button>
-                  <a href="/urls/<%= id %>/" style="color:rgb(231, 246, 246)" tooltip" data-placement="top"
+                  <a href="/urls/<%= id %>/" style="color:rgb(231, 246, 246)" data-toggle="tooltip" data-placement="top"
                     title="View Tiny URL <%= id %> Details">
                     <%= id %>
                   </a>
@@ -78,6 +78,11 @@
     <div class="column 2"></div>
     </div>
   </main>
+
+  <footer>
+    <%- include('partials/_footer') %>
+  </footer>
+  
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"

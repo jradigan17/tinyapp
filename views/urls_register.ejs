@@ -52,7 +52,7 @@
               style="color:red">*</span></label>
           <input type="password" class="form-control" name="password" placeholder="Password" required minlength="3">
           <span id="passwordHelpInline" class="form-text font-size: small" style="color: rgb(175, 173, 173)">Must be
-            8-20 characters long.
+            minimum 3 characters long.
           </span>
         </div>
         <div class="col-12">
@@ -358,6 +358,9 @@
 
       <% } %>
 
+      <footer>
+        <%- include('partials/_footer') %>
+      </footer>
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"

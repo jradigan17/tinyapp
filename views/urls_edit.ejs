@@ -43,6 +43,15 @@
           target="_blank">
           <%= id %>
         </a>
+        <button onclick="myFunction()" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)" id="myInput"><i id="icon" class="fa-regular fa-clipboard"></i></button>
+        <script>
+          function myFunction() {
+            const copyText = `localhost:1052/u/<%= id%>`;
+            navigator.clipboard.writeText(copyText);
+            document.getElementById('myInput').title = "Copied";
+            document.getElementById('icon').className = 'fa-solid fa-check';
+          }
+        </script>
       </p>
       <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update/?_method=PUT" method="POST">
         <div class="form-group mb-2">
@@ -84,6 +93,15 @@
             target="_blank">
             <%= id %>
           </a>
+          <button onclick="myFunction()" data-toggle="tooltip" data-placement="top" title="Copy to Clipboard" style="background-color:rgb(7, 7, 89); color:rgb(242, 22, 22)" id="myInput"><i id="icon" class="fa-regular fa-clipboard"></i></button>
+          <script>
+            function myFunction() {
+              const copyText = `localhost:1052/u/<%= id%>`;
+              navigator.clipboard.writeText(copyText);
+              document.getElementById('myInput').title = "Copied";
+              document.getElementById('icon').className = 'fa-solid fa-check';
+            }
+          </script>
         </p>
         <form class="form-inline blockquote row justify-content-center needs-validation" action="/urls/<%= id %>/update/?_method=PUT" method="POST">
           <div class="form-group mb-2">
@@ -102,7 +120,10 @@
 
     <% } %>
 
-
+    <footer>
+      <%- include('partials/_footer') %>
+    </footer>
+    
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
     integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
