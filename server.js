@@ -14,8 +14,6 @@
 // MUST DO
 //      - forgot password
 //      - change password
-//      - date created
-//      - date modified
 //      - clipboard to copy
 //      - add footer
 //----------------------------------------------------------
@@ -23,13 +21,14 @@
 //----------------------------------------------------------
 // Required aspects/files
 const {conColor, conLine} = require('../../formatting/globalvar');
+const {myDateObject} = require('./dateobject');
 const express = require("express");
 const cookieParser = require('cookie-parser');
 const bcrypt = require("bcryptjs");
 const cookieSession = require('cookie-session');
 const request = require('request');
 const methodOverride = require('method-override');
-const { generateRandomString, findKeyByValue, findKeyByValueEmail, findKeyByValueNumE, findKeyByValueNumU, urlsForUserID, deleteUserIDurls} = require('./helper');
+const { generateRandomString, findKeyByValue, findKeyByValueEmail, findKeyByValueNumE, findKeyByValueNumU, urlsForUserID, deleteUserIDurls, visitlog} = require('./helper');
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -42,16 +41,15 @@ console.log(`${conLine.fullLineDash(conColor.orange)}`);
 const app = express();
 const PORT = 1052; // default port 8080 // Define our base URL as http:\\localhost:1052
 app.set("view engine", "ejs"); // Use EJs as view engine
-app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true })); // parses body of forms into json
+app.use(express.static("public")); // Enable public folder
 app.use(cookieSession({
   name: 'session',
   keys: ['key1'],
   // Cookie Options
-  maxAge: 60 * 1000 // (24 * 60 * 60 * 1000) // 24 hours
-}));
-// override with POST having ?_method=DELETE
-app.use(methodOverride('_method'));
+  maxAge: 60 * 60 * 1000 // (24 * 60 * 60 * 1000) // 24 hours
+})); // Cookies
+app.use(methodOverride('_method')); // override POST having ?_method=DELETE
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -60,10 +58,18 @@ const urlDatabase = {
   b6UTxQ: {
     longURL: "https://www.tsn.ca",
     userID: "aJ48lW",
+    visit: 0,
+    datalog: [],
+    dateCreated: myDateObject.dateFull(),
+    dateModified: ""
   },
   i3BoGr: {
     longURL: "https://www.google.ca",
     userID: "aJ48lW",
+    visit: 0,
+    datalog: [],
+    dateCreated: myDateObject.dateFull(),
+    dateModified: ""
   },
 };
 
@@ -115,7 +121,13 @@ app.get("/urls/:id", (req, res) => {
   if (!urlDatabase[req.params.id]) {
     res.status(404).redirect('/PageNotFound');
   } else {
-    const templateVars = {user: userDatabase[req.session.userID], id: req.params.id, longURL: urlDatabase[req.params.id].longURL};
+    const templateVars = {user: userDatabase[req.session.userID], id: req.params.id, longURL: urlDatabase[req.params.id].longURL, visit: urlDatabase[req.params.id].visit, dateCreated: urlDatabase[req.params.id].dateCreated, dateModified: urlDatabase[req.params.id].dateModified, datalog: visitlog(urlDatabase[req.params.id].datalog), runninglog: urlDatabase[req.params.id].datalog};
+    if (urlDatabase[req.params.id].userID !== req.session.userID) {
+      templateVars.access = "restricted";
+    } else {
+      templateVars.access = "valid";
+    }
+
     res.render("urls_show", templateVars);
   }
 });
@@ -140,6 +152,15 @@ app.get("/u/:id", (req, res) => {
     res.status(404).redirect('/PageNotFound');
   } else {
     const longURL = urlDatabase[req.params.id].longURL;
+    urlDatabase[req.params.id].visit += 1;
+    let myobject = {};
+    if (!req.session.userID) {
+      myobject.userID = "unregistered";
+    } else {
+      myobject.userID = [req.session.userID];
+    }
+    myobject.dateCreated = myDateObject.dateFull();
+    urlDatabase[req.params.id].datalog.push(myobject);
     res.redirect(`${longURL}`);
   }
 });
@@ -227,7 +248,7 @@ app.post("/urls/new", (req, res) => {
         res.render("urls_new", templateVars);
       } else {
         const id = generateRandomString();
-        urlDatabase[id] = {longURL: longURL, userID: req.session.userID};
+        urlDatabase[id] = {longURL: longURL, userID: req.session.userID, visit: 0, datalog: [], dateCreated: myDateObject.dateFull(), dateModified: ""};
         res.redirect(`/urls/${id}`);
       }
     });
@@ -293,7 +314,7 @@ app.put("/urls/:id/update", (req, res) => {
           const templateVars = {user: userDatabase[req.session.userID], id: req.params.id, longURL: urlDatabase[req.params.id].longURL, invalid: true};
           return res.render("urls_edit", templateVars);
         } else {
-          urlDatabase[req.params.id] = {longURL: longURL, userID: req.session.userID};
+          urlDatabase[req.params.id] = {longURL: longURL, userID: req.session.userID, visit: urlDatabase[req.params.id].visit, datalog: urlDatabase[req.params.id].datalog, dateCreated: urlDatabase[req.params.id].dateCreated, dateModified: myDateObject.dateFull()};
           res.redirect(`/urls/${req.params.id}`);
         }
       });
@@ -436,7 +457,7 @@ app.get("/PageNotFound", (req, res) => {
 });
 
 app.use((req, res, next) => {
-  res.status(404).redirect('/PageNotFound');
+  return res.status(404).redirect('/PageNotFound');
 });
 //----------------------------------------------------------
 

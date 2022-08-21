@@ -21,13 +21,15 @@
     <div class="row">
       <div class="column 1"></div>
       <table class="table table-sm table-striped table-dark table-hover border border-dark border-rounded"
-        style="width: 1000px; margin: 2em;">
+        style="width: 1250px; margin: 2em;">
         <thead>
           <tr>
-            <th class="align-middle blockquote text-nowrap" style="width: 150px;" scope="col">Tiny URL ID</th>
-            <th class="align-middle blockquote" style="width: 250px;" scope="col">Long URL</th>
-            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Edit</th>
-            <th class="align-middle blockquote text-center" style="width: 75px;" scope="col">Delete</th>
+            <th class="align-middle blockquote text-nowrap" style="width: 70px;" scope="col">Tiny URL ID</th>
+            <th class="align-middle blockquote" style="width: 225px;" scope="col">Long URL</th>
+            <th class="align-middle blockquote text-center" style="width: 30px;" scope="col">Edit</th>
+            <th class="align-middle blockquote text-center" style="width: 30px;" scope="col">Delete</th>
+            <th class="align-middle blockquote text-center" style="width: 80px;" scope="col">Date Created</th>
+            <th class="align-middle blockquote text-center" style="width: 80px;" scope="col">Date Modified</th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +63,12 @@
                     title="Delete Tiny URL <%= id %>" style="background-color:rgb(242, 22, 22); color:black"><i
                       class="fa-solid fa-trash-can"></i></button>
                 </form>
+              </td>
+              <td class="align-middle text-center" style="color:rgb(231, 246, 246)">
+                <%= urls[id].dateCreated %>
+              </td>
+              <td class="align-middle text-center" style="color:rgb(231, 246, 246)">
+                <%= urls[id].dateModified %>
               </td>
             </tr>
             <% } %>

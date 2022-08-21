@@ -66,9 +66,113 @@
               <%= id %>
             </a>
           </p>
+
         </div>
-        <div class="card-footer text-muted"></div>
-      </div>
+
+      <div class="card-footer text-muted"></div>
+    </div>
+
+      <div class="card-footer text-muted"></div>
+
+
+
+      <% if (access === "valid") { %>
+      <div class="row justify-content-center">
+      <div class="card justify-content-center" style="background-color:rgb(80, 78, 78); width: 40em">
+        <div class="card-header justify-content-center"></div>
+        <div class="card-body" style="background-color:black; color: whitesmoke">
+
+          <div id="analytics" class="carousel slide" data-ride="carousel">
+            <div class="carousel-indicators">
+              <button type="button" data-target="#analytics" data-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+              <button type="button" data-target="#analytics" data-slide-to="1" aria-label="Slide 2"></button>
+              <button type="button" data-target="#analytics" data-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner">
+              <div class="carousel-item active text-center" data-interval="8000">
+            <div style="color: #ff8000">
+              <h4 class="mb-3">Tiny URL ID: <%= id %></h4>
+              <p style="color: rgb(131, 132, 129)">Date Created: <%= dateCreated %></p>
+              <p style="color: rgb(131, 132, 129)">Date Modified: <%= dateModified %></p>
+              <p style="color: rgb(131, 132, 129)">Total Visits: <%= visit %></p>
+              
+            </div>
+
+          </div>
+
+
+          <div class="carousel-item text-center" data-interval="5000">
+            <h4 class="mb-3" style="color: #ff8000">Tiny URL ID: <%= id %></h4>
+            <div class="row justify-content-center">
+
+              <table class="table text-center table-sm table-striped table-dark table-hover border border-dark border-rounded "
+              style="width: 200px;">
+              <thead>
+                <tr>
+                  <th class="align-middle blockquote text-nowrap text-center" style="color: rgb(131, 132, 129); width: 70px;" scope="col">User</th>
+                  <th class="align-middle blockquote text-nowrap text-center" style="color: rgb(131, 132, 129); width: 70px;" scope="col">No. Visits</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for (let id in datalog) { %>
+                  <tr>
+                    <td class="align-middle text-center" data-interval="5000" style="color: rgb(131, 132, 129)">
+                      <%= id %>
+                    </td>
+                    <td class="align-middle text-center" style="color: rgb(131, 132, 129)">
+                      <%= datalog[id] %>
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+            </div>
+          </div>
+          
+          <div class="carousel-item text-center">
+            <h4 class="mb-3" style="color: #ff8000">Tiny URL ID: <%= id %></h4>
+            <div class="row justify-content-center">
+              <table class="table text-center table-sm table-striped table-dark table-hover border border-dark border-rounded "
+              style="width: 300px;">
+              <thead>
+                <tr>
+                  <th class="align-middle blockquote text-nowrap text-center" style="color: rgb(131, 132, 129); width: 70px;" scope="col">UserID</th>
+                  <th class="align-middle blockquote text-nowrap text-center" style="color: rgb(131, 132, 129); width: 70px;" scope="col">Visit Log</th>
+                </tr>
+              </thead>
+              <tbody>
+                <% for (let item of runninglog) { %>
+                  <tr>
+                    <td class="align-middle text-center" style="color: rgb(131, 132, 129)">
+                      <%= item.userID %>
+                    </td>
+                    <td class="align-middle text-center" style="color: rgb(131, 132, 129)">
+                      <%= item.dateCreated %>
+                    </td>
+                  </tr>
+                  <% } %>
+              </tbody>
+            </table>
+            </div>
+          </div>
+
+        <button class="carousel-control-prev" type="button" data-target="#analytics" data-slide="prev" style="background-color:black">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-target="#analytics" data-slide="next" style="background-color:black">
+          <span class="visually-hidden">Next</span>
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        </button>
+
+
+    </div>
+  </div>
+</div>
+
+      <div class="card-footer text-muted"></div>
+
+      <% } %>
       <% } %>
 
 

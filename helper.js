@@ -87,6 +87,24 @@ const deleteUserIDurls = (user, urlDatabase) => {
 };
 //----------------------------------------------------------
 
+//----------------------------------------------------------
+// Visit Datalog
+const visitlog = (datalog) => {
+  let result = {};
+
+  for (let i of datalog) {
+    if (result[i.userID]) {
+      result[i.userID] += 1;
+    // } else if (i === undefined) {
+    //   continue;
+    } else {
+      result[i.userID] = 1;
+    }
+  }
+  return result;
+};
+//----------------------------------------------------------
+
 module.exports = {
   generateRandomString,
   findKeyByValue,
@@ -94,5 +112,6 @@ module.exports = {
   findKeyByValueNumE,
   findKeyByValueNumU,
   urlsForUserID,
-  deleteUserIDurls
+  deleteUserIDurls,
+  visitlog
 };
