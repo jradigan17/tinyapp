@@ -1,0 +1,42 @@
+Sun, 21 Aug 2022 15:57:36 GMT GET /logout 302 56 - 11.892 ms
+{"b6UTxQ":{"longURL":"https://www.tsn.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:57","dateModified":""},"i3BoGr":{"longURL":"https://www.google.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:57","dateModified":""}}{}Sun, 21 Aug 2022 15:57:36 GMT GET /login 304 - - 11.113 ms
+Sun, 21 Aug 2022 15:57:36 GMT GET /favicon.ico 302 35 - 1.125 ms
+Sun, 21 Aug 2022 15:57:36 GMT GET /PageNotFound 200 3182 - 2.680 ms
+Sun, 21 Aug 2022 15:57:38 GMT POST /register 302 62 - 0.397 ms
+Sun, 21 Aug 2022 15:57:38 GMT GET /register 200 6774 - 4.873 ms
+Sun, 21 Aug 2022 15:57:38 GMT GET /favicon.ico 302 35 - 0.522 ms
+Sun, 21 Aug 2022 15:57:38 GMT GET /PageNotFound 304 - - 1.648 ms
+Sun, 21 Aug 2022 15:57:42 GMT POST /submitregister 302 60 - 105.051 ms
+Sun, 21 Aug 2022 15:57:42 GMT GET /profile 304 - - 4.104 ms
+Sun, 21 Aug 2022 15:57:42 GMT GET /favicon.ico 302 35 - 0.285 ms
+Sun, 21 Aug 2022 15:57:42 GMT GET /PageNotFound 200 3977 - 1.522 ms
+Sun, 21 Aug 2022 15:57:43 GMT GET /urls/new 200 4161 - 2.150 ms
+Sun, 21 Aug 2022 15:57:43 GMT GET /favicon.ico 302 35 - 0.201 ms
+Sun, 21 Aug 2022 15:57:43 GMT GET /PageNotFound 304 - - 3.433 ms
+Sun, 21 Aug 2022 15:57:46 GMT POST /urls/new 302 68 - 1131.060 ms
+Sun, 21 Aug 2022 15:57:46 GMT GET /urls/fITk4c 200 9413 - 5.000 ms
+Sun, 21 Aug 2022 15:57:46 GMT GET /favicon.ico 302 35 - 0.475 ms
+Sun, 21 Aug 2022 15:57:46 GMT GET /PageNotFound 304 - - 2.070 ms
+Sun, 21 Aug 2022 15:59:37 GMT GET /logout 302 56 - 12.655 ms
+{"b6UTxQ":{"longURL":"https://www.tsn.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:59","dateModified":""},"i3BoGr":{"longURL":"https://www.google.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:59","dateModified":""}}{}Sun, 21 Aug 2022 15:59:37 GMT GET /login 304 - - 10.503 ms
+Sun, 21 Aug 2022 15:59:38 GMT GET /favicon.ico 302 35 - 1.044 ms
+Sun, 21 Aug 2022 15:59:38 GMT GET /PageNotFound 200 3182 - 3.345 ms
+Sun, 21 Aug 2022 15:59:39 GMT POST /register 302 62 - 0.494 ms
+Sun, 21 Aug 2022 15:59:39 GMT GET /register 200 6774 - 6.502 ms
+Sun, 21 Aug 2022 15:59:39 GMT GET /favicon.ico 302 35 - 0.441 ms
+Sun, 21 Aug 2022 15:59:39 GMT GET /PageNotFound 304 - - 1.890 ms
+Sun, 21 Aug 2022 15:59:43 GMT POST /submitregister 302 60 - 101.742 ms
+Sun, 21 Aug 2022 15:59:43 GMT GET /profile 304 - - 2.722 ms
+Sun, 21 Aug 2022 15:59:43 GMT GET /favicon.ico 302 35 - 0.308 ms
+Sun, 21 Aug 2022 15:59:43 GMT GET /PageNotFound 200 3977 - 1.605 ms
+Sun, 21 Aug 2022 15:59:44 GMT GET /urls/new 200 4161 - 2.517 ms
+Sun, 21 Aug 2022 15:59:44 GMT GET /favicon.ico 302 35 - 0.521 ms
+Sun, 21 Aug 2022 15:59:44 GMT GET /PageNotFound 304 - - 1.598 ms
+Sun, 21 Aug 2022 15:59:48 GMT POST /urls/new 302 68 - 1661.527 ms
+Sun, 21 Aug 2022 15:59:48 GMT GET /urls/opskIj 200 9413 - 6.114 ms
+Sun, 21 Aug 2022 15:59:48 GMT GET /favicon.ico 302 35 - 0.286 ms
+Sun, 21 Aug 2022 15:59:48 GMT GET /PageNotFound 304 - - 1.872 ms
+Sun, 21 Aug 2022 15:59:49 GMT GET /logout 302 56 - 1.246 ms
+{"b6UTxQ":{"longURL":"https://www.tsn.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:59","dateModified":""},"i3BoGr":{"longURL":"https://www.google.ca","userID":"aJ48lW","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:59","dateModified":""},"opskIj":{"longURL":"http://www.github.com","userID":"Hmv8mO","visit":0,"datalog":[],"dateCreated":"2022-08-21 11:59","dateModified":""}}{"Hmv8mO":{"userID":"Hmv8mO","firstname":"Jennelle","lastname":"Radigan","username":"jradigan","password":"$2a$10$SX5Ge7rHtGG6L5tEVXMKVOyezl1J8Od1RLJJD9BlEdQVboed0SJim","email":"jradigan@hotmail.com","address1":"229 New Brighton Walk SE","address2":"","city":"Calgary","province":"AB","postalcode":"T2Z 5C7"}}Sun, 21 Aug 2022 15:59:49 GMT GET /login 304 - - 4.760 ms
+Sun, 21 Aug 2022 15:59:49 GMT GET /favicon.ico 302 35 - 0.291 ms
+Sun, 21 Aug 2022 15:59:49 GMT GET /PageNotFound 200 3182 - 1.325 ms

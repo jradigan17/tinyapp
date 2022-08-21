@@ -26,13 +26,18 @@ https://flex-web.compass.lighthouselabs.ca/projects/tiny-app
 ---
 ## Extra Features...
 - Hide menu bar if not logged in
+- Restricted access page if not logged in to the tiny URL
 - Incorrect password or username sends error to user
 - Trying to create duplicate accounts sends error to user
-- User profile & extended registration page with client & server side validation
+- User profile & extended registration page with client & server side validation and ability to edit, change, or delete user profile
 - Delete account which also deletes user's URLs
 - Custom logo
 - Restricted access page if users try to edit or delete other's tiny URLs
 - Tiny URLs cannot be created with invalid URLs
+- Page not found if tiny URL does not exist or page does not exist
+- Server log & TinyApp log options - you can include or exclude either
+- Rotating server log - save and create new log every 30 minutes or as set my user on server side
+- Tiny URL will not be created if invalid URL provided
 - _Stretch_: put & delete methods
 - _Stretch_: shows total clicks on a tiny URL (in edit page)
 - _Stretch_: shows unique clicks on a tiny URL (in edit page)
@@ -43,9 +48,7 @@ https://flex-web.compass.lighthouselabs.ca/projects/tiny-app
 ---
 ## Future Plans...
 - Analytics including hourly click thru chart 
-- Log file & database
 - Light mode & switch between light & dark mode
-- Additional link analytics (more graphs)
 - Favourites listing of URLs
 - Tab title icon
 - Confirm delete prior to deleting
@@ -62,8 +65,11 @@ https://flex-web.compass.lighthouselabs.ca/projects/tiny-app
 ## Quick Start...
 1) Clone and download from GitHub. Setup dependencies with  
   `npm install`   
-2) Start the TinyApp Server in your terminal with  
-  `npm start`   
+2) Start the TinyApp Server in your terminal with `nodemon`  
+  `npm start`: to have the server output and no log file   
+  `npm run start -- -logfile`: to include a log file   
+  `npm run start -- -logfile -quiet`: to quiet the server & include a log file   
+  `npm run start -- -quiet`: to quiet the server and don't include a log file
 3) Start the web app in your browser with  
   `localhost:1052/`
 
@@ -73,8 +79,11 @@ https://flex-web.compass.lighthouselabs.ca/projects/tiny-app
 ## Detailed Operation...
 1) Clone and download from GitHub. Setup dependencies with  
   `npm install`   
-2) Start the TinyApp Server in your terminal with  
-  `npm start`   
+2) Start the TinyApp Server in your terminal with `nodemon`  
+  `npm start`: to have the server output and no log file   
+  `npm run start -- -logfile`: to include a log file   
+  `npm run start -- -logfile -quiet`: to quiet the server & include a log file   
+  `npm run start -- -quiet`: to quiet the server and don't include a log file
 3) Start the web app in your browser with  
   `localhost:1052/`   
  Register for an account to create and manage your Tiny URLs.  

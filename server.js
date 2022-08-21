@@ -10,6 +10,7 @@
 //      - keep logged in
 //      - shut down server
 //      - add more mocha chai tests
+//      - bar chart
 //
 // MUST DO
 //      - forgot password
@@ -26,8 +27,11 @@ const express = require("express");
 const cookieParser = require('cookie-parser');
 const bcrypt = require("bcryptjs");
 const cookieSession = require('cookie-session');
+const morgan = require('morgan');
 const request = require('request');
+const fs = require('fs');
 const methodOverride = require('method-override');
+const rfs = require("rotating-file-stream");
 const { generateRandomString, findKeyByValue, findKeyByValueEmail, findKeyByValueNumE, findKeyByValueNumU, urlsForUserID, deleteUserIDurls, visitlog} = require('./helper');
 //----------------------------------------------------------
 
@@ -74,6 +78,37 @@ const urlDatabase = {
 };
 
 const userDatabase = {};
+//----------------------------------------------------------
+
+//----------------------------------------------------------
+// Check Server Quiet or Server Log
+let quiet = false;
+let log = false;
+for (let x = 0; x < process.argv.length; x ++) {
+  if (process.argv[x] === '-quiet') {
+    quiet = true;
+  }
+  if (process.argv[x] === '-logfile') {
+    log = true;
+  }
+}
+//----------------------------------------------------------
+
+
+//----------------------------------------------------------
+// Write to Log File & Console
+if (!quiet) {
+  app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms'));
+}
+
+if (log) {
+  const rfsStream = rfs.createStream("tinyapp.log", {
+    size: '10M', // rotate every 10 MegaBytes written
+    interval: '30m', // rotate after 2 minutes
+  });
+
+  app.use(morgan(':date[web] :method :url :status :res[content-length] - :response-time ms', { stream: rfsStream }));
+}
 //----------------------------------------------------------
 
 //----------------------------------------------------------
@@ -178,6 +213,22 @@ app.get("/login", (req, res) => {
 });
 
 app.get("/logout", (req, res) => {
+  if (log) {
+    fs.appendFile('tinyapp.log', JSON.stringify(urlDatabase), function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+    fs.appendFile('tinyapp.log', JSON.stringify(userDatabase), function(err) {
+      if (err) {
+        console.log(err);
+      }
+    });
+  }
+  if (!quiet) {
+    console.log(urlDatabase);
+    console.log(userDatabase);
+  }
   req.session.userID = null;
   res.redirect(`/login`);
 });
