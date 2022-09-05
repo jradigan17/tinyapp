@@ -26,21 +26,20 @@ https://flex-web.compass.lighthouselabs.ca/projects/tiny-app
 ---
 ## Extra Features...
 - Hide menu bar if not logged in
-- Restricted access page if not logged in to the tiny URL
 - Incorrect password or username sends error to user
 - Trying to create duplicate accounts sends error to user
 - User profile & extended registration page with client & server side validation and ability to edit, change, or delete user profile
-- Delete account which also deletes user's URLs
+- Delete account also deletes user's URLs
 - Custom logo
 - Restricted access page if users try to edit or delete other's tiny URLs
 - Tiny URLs cannot be created with invalid URLs
-- Page not found if tiny URL does not exist or page does not exist
+- Page not found if tiny URL does not exist or path does not exist
 - Server log & TinyApp log options - you can include or exclude either
 - Rotating server log - save and create new log every 30 minutes or as set my user on server side
-- Tiny URL will not be created if invalid URL provided
+- copy to clipboard enabled
 - _Stretch_: put & delete methods
-- _Stretch_: shows total clicks on a tiny URL (in edit page)
-- _Stretch_: shows unique clicks on a tiny URL (in edit page)
+- _Stretch_: shows total clicks on a tiny URL (in view tiny URL page)
+- _Stretch_: shows unique clicks on a tiny URL (in view tiny URL page)
 - _Stretch_: create click through log for each tiny URL  
 
 [( back to top 🔺)](#about)
